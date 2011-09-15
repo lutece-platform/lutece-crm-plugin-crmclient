@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+    <!-- Plugin Informations -->
+    <name>crmclient</name>
+    <class>fr.paris.lutece.plugins.crmclient.service.CRMClientPlugin</class>
+    <version>1.0.0</version>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
+    <description>crmclient.plugin.description</description>
+    <provider>crmclient.plugin.provider</provider>
+    <provider-url>http://lutece.paris.fr</provider-url>
+    <icon-url>images/admin/skin/plugins/crmclient/crmclient.png</icon-url>
+    <copyright>Copyright 2001-2011 Mairie de Paris</copyright>
+    <core-version-dependency>
+        <min-core-version>2.4.1</min-core-version>
+        <max-core-version/>
+    </core-version-dependency>
+    <db-pool-required>1</db-pool-required>
+
+	<!-- Daemons -->
+	<daemons>
+		<daemon>
+			<daemon-id>crmClientSender</daemon-id>
+			<daemon-name>
+				crmclient.daemon.crmClientSender.name
+			</daemon-name>
+			<daemon-description>
+				crmclient.daemon.crmClientSender.description
+			</daemon-description>
+			<daemon-class>
+				fr.paris.lutece.plugins.crmclient.service.daemon.CRMClientSenderDaemon
+			</daemon-class>
+		</daemon>
+	</daemons>
+</plug-in>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>Configuration</title>
+    </properties>
+    <body>
+        <section name="Installation">
+			<p>
+				Configurer l'URL de la webapp contenant CRM dans le fichier <strong>crmclient.properties</strong> :
+			</p>
+			<div class="source">
+<pre>
+    crmclient.crm.rest.webapp.url=<strong>http://localhost:8080/lutece</strong>
+</pre>
+			</div>
+			<p>
+				Configurer les cl&#233;s priv&#233;es utilis&#233;es pour les signatures dans le fichier <strong>crmclient_context.xml</strong> :     
+			</p>
+			<div class="source">
+<pre>
+&lt;bean id="crmclient.hashService" class="fr.paris.lutece.util.signrequest.security.Sha1HashService" /&gt;
+&lt;bean id="crmclient.requestAuthenticator" class="fr.paris.lutece.util.signrequest.HeaderHashAuthenticator" &gt;
+	&lt;property name="hashService" ref="crmclient.hashService" /&gt;
+	&lt;property name="signatureElements" ref="crmclient.signatureElements" /&gt;
+	&lt;property name="privateKey"&gt;
+		&lt;value&gt;<strong>change me</strong>&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+</pre>
+			</div>
+        </section>
+    </body>
+</document>
