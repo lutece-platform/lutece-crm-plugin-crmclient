@@ -64,25 +64,28 @@ public class CRMClientSenderDaemon extends Daemon
             {
                 crmItem = queue.consume(  );
 
-                try
+                if ( crmItem != null )
                 {
-                    CRMClientService.getService(  ).doProcessWS( crmItem );
-                }
-                catch ( HttpAccessException e )
-                {
-                    AppLogService.error( e );
-                    // If connection failed, then put the item back to the file
-                    queue.send( crmItem );
+                    try
+                    {
+                        CRMClientService.getService(  ).doProcessWS( crmItem );
+                    }
+                    catch ( HttpAccessException e )
+                    {
+                        AppLogService.error( e );
+                        // If connection failed, then put the item back to the file
+                        queue.send( crmItem );
 
-                    break;
-                }
-                catch ( CRMClientException e )
-                {
-                    AppLogService.error( e );
-                    // Put the item back to the file
-                    queue.send( crmItem );
+                        break;
+                    }
+                    catch ( CRMClientException e )
+                    {
+                        AppLogService.error( e );
+                        // Put the item back to the file
+                        queue.send( crmItem );
 
-                    break;
+                        break;
+                    }
                 }
             }
             while ( crmItem != null );
