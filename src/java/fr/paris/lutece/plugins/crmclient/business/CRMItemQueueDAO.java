@@ -121,6 +121,8 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      */
     public synchronized void insert( CRMItemQueue crmItemQueue, Plugin plugin )
     {
+        Transaction transaction = null;
+
         try
         {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(  );
@@ -130,31 +132,27 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
             objectOutputStream.close(  );
             byteArrayOutputStream.close(  );
 
-            Transaction transaction = new Transaction( plugin );
+            transaction = new Transaction( plugin );
 
-            try
-            {
-                int nNewPrimaryKey = newPrimaryKey( plugin );
-                crmItemQueue.setIdCRMItemQueue( nNewPrimaryKey );
-                transaction.prepareStatement( SQL_QUERY_INSERT );
-                transaction.getStatement(  ).setInt( 1, nNewPrimaryKey );
-                transaction.executeStatement(  );
-                transaction.prepareStatement( SQL_QUERY_INSERT_CRM_ITEM );
-                transaction.getStatement(  ).setInt( 1, nNewPrimaryKey );
-                transaction.getStatement(  ).setBytes( 2, byteArrayOutputStream.toByteArray(  ) );
-                transaction.executeStatement(  );
+            int nNewPrimaryKey = newPrimaryKey( plugin );
+            crmItemQueue.setIdCRMItemQueue( nNewPrimaryKey );
+            transaction.prepareStatement( SQL_QUERY_INSERT );
+            transaction.getStatement(  ).setInt( 1, nNewPrimaryKey );
+            transaction.executeStatement(  );
+            transaction.prepareStatement( SQL_QUERY_INSERT_CRM_ITEM );
+            transaction.getStatement(  ).setInt( 1, nNewPrimaryKey );
+            transaction.getStatement(  ).setBytes( 2, byteArrayOutputStream.toByteArray(  ) );
+            transaction.executeStatement(  );
 
-                transaction.commit(  );
-            }
-
-            catch ( Exception e )
-            {
-                transaction.rollback( e );
-                AppLogService.error( e );
-            }
+            transaction.commit(  );
         }
         catch ( Exception e )
         {
+            if ( transaction != null )
+            {
+                transaction.rollback( e );
+            }
+
             AppLogService.error( e );
         }
     }
