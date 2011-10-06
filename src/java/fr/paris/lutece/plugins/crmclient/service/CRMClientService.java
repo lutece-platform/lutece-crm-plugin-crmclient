@@ -41,6 +41,8 @@ import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  *
@@ -107,10 +109,14 @@ public final class CRMClientService
     public void notify( String strIdDemand, String strObject, String strMessage, String strSender )
     {
         AbstractCRMItem crmItem = new NotificationItem(  );
-        crmItem.putParameter( AbstractCRMItem.ID_DEMAND, strIdDemand );
-        crmItem.putParameter( AbstractCRMItem.NOTIFICATION_OBJECT, strObject );
-        crmItem.putParameter( AbstractCRMItem.NOTIFICATION_MESSAGE, strMessage );
-        crmItem.putParameter( AbstractCRMItem.NOTIFICATION_SENDER, strSender );
+        crmItem.putParameter( AbstractCRMItem.ID_DEMAND,
+            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( AbstractCRMItem.NOTIFICATION_OBJECT,
+            StringUtils.isNotBlank( strObject ) ? strObject : StringUtils.EMPTY );
+        crmItem.putParameter( AbstractCRMItem.NOTIFICATION_MESSAGE,
+            StringUtils.isNotBlank( strMessage ) ? strMessage : StringUtils.EMPTY );
+        crmItem.putParameter( AbstractCRMItem.NOTIFICATION_SENDER,
+            StringUtils.isNotBlank( strSender ) ? strSender : StringUtils.EMPTY );
 
         _crmClientQueue.send( crmItem );
     }
@@ -123,8 +129,10 @@ public final class CRMClientService
     public void sendUpdateDemand( String strIdDemand, String strStatusText )
     {
         ICRMItem crmItem = new DemandItem(  );
-        crmItem.putParameter( AbstractCRMItem.ID_DEMAND, strIdDemand );
-        crmItem.putParameter( AbstractCRMItem.STATUS_TEXT, strStatusText );
+        crmItem.putParameter( AbstractCRMItem.ID_DEMAND,
+            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( AbstractCRMItem.STATUS_TEXT,
+            StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
         _crmClientQueue.send( crmItem );
     }
