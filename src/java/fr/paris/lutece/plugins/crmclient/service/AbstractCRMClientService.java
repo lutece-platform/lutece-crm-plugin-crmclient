@@ -38,77 +38,54 @@ import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.plugins.crmclient.business.demand.DemandItem;
 import fr.paris.lutece.plugins.crmclient.business.notification.NotificationItem;
 import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.util.httpaccess.HttpAccessException;
 
 import org.apache.commons.lang.StringUtils;
+
+import javax.inject.Inject;
 
 
 /**
  *
- * CRMClientService
+ * AbstractCRMClientService
  *
  */
-public final class CRMClientService
+public abstract class AbstractCRMClientService implements ICRMClientService
 {
-    private static final String BEAN_CRM_CLIENT_SERVICE = "crmclient.crmClientService";
+    @Inject
     private ICRMClientQueue _crmClientQueue;
-    private CRMClientWebService _crmClientWebService;
 
     /**
-     * Private constructor
-     */
-    private CRMClientService(  )
-    {
-    }
-
-    /**
-     * Get the instance of the service
-     * @return the instance of the service
-     */
-    public static CRMClientService getService(  )
-    {
-        return (CRMClientService) SpringContextService.getPluginBean( CRMClientPlugin.PLUGIN_NAME,
-            BEAN_CRM_CLIENT_SERVICE );
-    }
-
-    /**
-     * Set the crm client queue
-     * @param crmClientQueue the crm client queue
-     */
-    public void setCRMClientQueue( ICRMClientQueue crmClientQueue )
-    {
-        _crmClientQueue = crmClientQueue;
-    }
-
-    /**
-     * Set the crm client webservice
-     * @param crmClientWebService the crm client webservice
-     */
-    public void setCRMClientWebService( CRMClientWebService crmClientWebService )
-    {
-        _crmClientWebService = crmClientWebService;
-    }
-
-    /**
-     * Get the queue
-     * @return the queue
-     */
+         * {@inheritDoc}
+         */
+    @Override
     public ICRMClientQueue getQueue(  )
     {
         return _crmClientQueue;
     }
 
     /**
-     * Notify a demand
-     * @param strIdDemand the id demand
-     * @param strObject the object
-     * @param strMessage the message
-     * @param strSender the sender
-     */
+    * {@inheritDoc}
+    */
+    @Override
     public void notify( String strIdDemand, String strObject, String strMessage, String strSender )
     {
-        AbstractCRMItem crmItem = new NotificationItem(  );
+        notify( strIdDemand, strObject, strMessage, strSender, StringUtils.EMPTY );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notify( String strIdDemand, String strObject, String strMessage, String strSender,
+        String strCRMWebAppBaseURL )
+    {
+        ICRMItem crmItem = new NotificationItem(  );
+
+        if ( StringUtils.isNotBlank( strCRMWebAppBaseURL ) )
+        {
+            crmItem.setCRMWebAppBaseURL( strCRMWebAppBaseURL );
+        }
+
         crmItem.putParameter( AbstractCRMItem.ID_DEMAND,
             StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
         crmItem.putParameter( AbstractCRMItem.NOTIFICATION_OBJECT,
@@ -122,29 +99,32 @@ public final class CRMClientService
     }
 
     /**
-     * Update a demand
-     * @param strIdDemand the id demand
-     * @param strStatusText the status text
+     * {@inheritDoc}
      */
+    @Override
     public void sendUpdateDemand( String strIdDemand, String strStatusText )
     {
+        sendUpdateDemand( strIdDemand, strStatusText, StringUtils.EMPTY );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sendUpdateDemand( String strIdDemand, String strStatusText, String strCRMWebAppBaseURL )
+    {
         ICRMItem crmItem = new DemandItem(  );
+
+        if ( StringUtils.isNotBlank( strCRMWebAppBaseURL ) )
+        {
+            crmItem.setCRMWebAppBaseURL( strCRMWebAppBaseURL );
+        }
+
         crmItem.putParameter( AbstractCRMItem.ID_DEMAND,
             StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
         crmItem.putParameter( AbstractCRMItem.STATUS_TEXT,
             StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
         _crmClientQueue.send( crmItem );
-    }
-
-    /**
-     * Calls WS to notify/update a demand
-     * @param crmItem the crm item
-     * @throws HttpAccessException exception if connexion problem
-     * @throws CRMClientException exception if application not well configured
-     */
-    public void doProcessWS( ICRMItem crmItem ) throws HttpAccessException, CRMClientException
-    {
-        _crmClientWebService.doProcess( crmItem );
     }
 }

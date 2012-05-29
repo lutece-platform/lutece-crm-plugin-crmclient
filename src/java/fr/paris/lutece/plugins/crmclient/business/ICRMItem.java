@@ -65,6 +65,12 @@ public interface ICRMItem
     Map<String, String> getParameters(  );
 
     /**
+     * Set the CRM webapp base URL
+     * @param strCRMWebAppBaseURL the CRM webapp URL
+     */
+    void setCRMWebAppBaseURL( String strCRMWebAppBaseURL );
+
+    /**
      * Pu a new parameter to the map parameters
      * @param strKey the key of the parameter
      * @param strValue the value of the parameter

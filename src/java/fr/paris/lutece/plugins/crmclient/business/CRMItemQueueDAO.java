@@ -87,6 +87,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public int nextCRMItemQueueId( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_CRM_ITEM_QUEUE_ID, plugin );
@@ -108,6 +109,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void lockCRMItemQueue( int nIdCRMItemQueue, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOCK_CRM_ITEM, plugin );
@@ -119,6 +121,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized void insert( CRMItemQueue crmItemQueue, Plugin plugin )
     {
         Transaction transaction = null;
@@ -160,6 +163,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public CRMItemQueue load( int nIdCRMItemQueue, Plugin plugin )
     {
         CRMItemQueue crmItemQueue = null;
@@ -202,6 +206,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public void delete( int nIdCRMItemQueue, Plugin plugin )
     {
         Transaction transaction = new Transaction( plugin );
@@ -227,6 +232,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getCountCRMItem( Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT, plugin );

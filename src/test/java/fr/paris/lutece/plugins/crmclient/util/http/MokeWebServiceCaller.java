@@ -50,8 +50,9 @@ public class MokeWebServiceCaller extends WebServiceCaller
     private static final String ID_DEMAND = "1";
 
     /**
-     * Moke call WebService method
+     * {@inheritDoc}
      */
+    @Override
     public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
         List<String> listElements ) throws HttpAccessException
     {

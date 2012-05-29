@@ -62,6 +62,7 @@ public class MokeCRMItem extends AbstractCRMItem
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getUrlForWS(  ) throws CRMClientException
     {
         return URL_FOR_WS;

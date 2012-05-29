@@ -53,8 +53,25 @@ public class NotificationItem extends AbstractCRMItem
     private static final String PROPERTY_WS_CRM_DEMAND_NOTIFY_URL = "crmclient.crm.rest.demand.notify.url";
 
     /**
+     * Constructor
+     */
+    public NotificationItem(  )
+    {
+    }
+
+    /**
+     * Constructor
+     * @param strCRMWebAppBaseURL the CRM webapp base URL
+     */
+    public NotificationItem( String strCRMWebAppBaseURL )
+    {
+        setCRMWebAppBaseURL( strCRMWebAppBaseURL );
+    }
+
+    /**
      * {@inheritDoc}
      */
+    @Override
     public String getUrlForWS(  ) throws CRMClientException
     {
         String strCRMRestNotifyDemandUrl = AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );

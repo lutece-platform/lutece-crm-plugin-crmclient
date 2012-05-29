@@ -57,17 +57,19 @@ public abstract class AbstractCRMItem implements Serializable, ICRMItem
     public static final String NOTIFICATION_SENDER = "notification_sender";
     public static final String ID_DEMAND = "id_demand";
     public static final String STATUS_TEXT = "status_text";
-    private static final long serialVersionUID = -6044853153732668036L;
+    private static final long serialVersionUID = 7447980566904633949L;
 
     // PROPERTY
     private static final String PROPERTY_WS_CRM_REST_WEBAPP_URL = "crmclient.crm.rest.webapp.url";
 
     // Private parameters
     private Map<String, String> _mapParameters = new LinkedHashMap<String, String>(  );
+    private String _strCRMWebAppBaseURL;
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setParameters( Map<String, String> mapParameters )
     {
         _mapParameters = mapParameters;
@@ -76,6 +78,7 @@ public abstract class AbstractCRMItem implements Serializable, ICRMItem
     /**
      * {@inheritDoc}
      */
+    @Override
     public Map<String, String> getParameters(  )
     {
         return _mapParameters;
@@ -84,9 +87,19 @@ public abstract class AbstractCRMItem implements Serializable, ICRMItem
     /**
      * {@inheritDoc}
      */
+    @Override
     public void putParameter( String strKey, String strValue )
     {
         _mapParameters.put( strKey, strValue );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCRMWebAppBaseURL( String strCRMWebAppBaseURL )
+    {
+        _strCRMWebAppBaseURL = strCRMWebAppBaseURL;
     }
 
     /**
@@ -96,14 +109,19 @@ public abstract class AbstractCRMItem implements Serializable, ICRMItem
      */
     protected String getCRMRestWebappUrl(  ) throws CRMClientException
     {
-        String strCRMRestWebappUrl = AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_WEBAPP_URL );
-
-        if ( StringUtils.isBlank( strCRMRestWebappUrl ) )
+        if ( StringUtils.isBlank( _strCRMWebAppBaseURL ) )
         {
-            throw new CRMClientException( 
-                "CRMClient - Could not retrieve the CRM rest webapp URL : The property file 'crmclient.properties' is not well configured." );
+            String strDefaultCRMWebAppBaseUrl = AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_WEBAPP_URL );
+
+            if ( StringUtils.isBlank( strDefaultCRMWebAppBaseUrl ) )
+            {
+                throw new CRMClientException( 
+                    "CRMClient - Could not retrieve the CRM rest webapp URL : The property file 'crmclient.properties' is not well configured." );
+            }
+
+            return strDefaultCRMWebAppBaseUrl;
         }
 
-        return strCRMRestWebappUrl;
+        return _strCRMWebAppBaseURL;
     }
 }

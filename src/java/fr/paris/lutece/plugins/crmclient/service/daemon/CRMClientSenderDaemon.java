@@ -35,11 +35,14 @@ package fr.paris.lutece.plugins.crmclient.service.daemon;
 
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.plugins.crmclient.service.CRMClientException;
-import fr.paris.lutece.plugins.crmclient.service.CRMClientService;
+import fr.paris.lutece.plugins.crmclient.service.ICRMClientService;
 import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
 import fr.paris.lutece.portal.service.daemon.Daemon;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -54,9 +57,11 @@ public class CRMClientSenderDaemon extends Daemon
      */
     public synchronized void run(  )
     {
-        ICRMClientQueue queue = CRMClientService.getService(  ).getQueue(  );
+        StringBuilder sbLog = new StringBuilder(  );
+        ICRMClientService crmClientService = SpringContextService.getBean( ICRMClientService.BEAN_SERVICE );
+        ICRMClientQueue queue = crmClientService.getQueue(  );
 
-        if ( queue.size(  ) > 0 )
+        if ( ( queue != null ) && ( queue.size(  ) > 0 ) )
         {
             ICRMItem crmItem = null;
 
@@ -66,29 +71,51 @@ public class CRMClientSenderDaemon extends Daemon
 
                 if ( crmItem != null )
                 {
+                    sbLog.append( "\n- Sending " + crmItem.getClass(  ).getName(  ) + "..." );
+
+                    boolean bIsSent = true;
+
                     try
                     {
-                        CRMClientService.getService(  ).doProcessWS( crmItem );
+                        crmClientService.doProcess( crmItem );
                     }
                     catch ( HttpAccessException e )
                     {
-                        AppLogService.error( e );
+                        AppLogService.error( e.getMessage(  ), e );
                         // If connection failed, then put the item back to the file
                         queue.send( crmItem );
+                        bIsSent = false;
+                        sbLog.append( "NOK" );
+                        sbLog.append( "\n\t" + e.getMessage(  ) );
 
                         break;
                     }
                     catch ( CRMClientException e )
                     {
-                        AppLogService.error( e );
+                        AppLogService.error( e.getMessage(  ), e );
                         // Put the item back to the file
                         queue.send( crmItem );
+                        bIsSent = false;
+                        sbLog.append( "NOK" );
+                        sbLog.append( "\n\t" + e.getMessage(  ) );
 
                         break;
+                    }
+
+                    if ( bIsSent )
+                    {
+                        sbLog.append( "OK" );
                     }
                 }
             }
             while ( crmItem != null );
         }
+
+        if ( StringUtils.isBlank( sbLog.toString(  ) ) )
+        {
+            sbLog.append( "\nNothing to send." );
+        }
+
+        setLastRunLogs( sbLog.toString(  ) );
     }
 }

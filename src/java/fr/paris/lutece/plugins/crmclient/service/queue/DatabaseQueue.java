@@ -34,8 +34,13 @@
 package fr.paris.lutece.plugins.crmclient.service.queue;
 
 import fr.paris.lutece.plugins.crmclient.business.CRMItemQueue;
-import fr.paris.lutece.plugins.crmclient.business.CRMItemQueueHome;
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
+import fr.paris.lutece.plugins.crmclient.business.ICRMItemQueueDAO;
+import fr.paris.lutece.plugins.crmclient.service.CRMClientPlugin;
+import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.plugin.PluginService;
+
+import javax.inject.Inject;
 
 
 /**
@@ -45,26 +50,32 @@ import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
  */
 public class DatabaseQueue implements ICRMClientQueue
 {
+    public static final String BEAN_SERVICE = "crmclient.databaseQueue";
+    @Inject
+    private ICRMItemQueueDAO _crmItemQueueDAO;
+
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized void send( ICRMItem crmItem )
     {
         CRMItemQueue crmQueue = new CRMItemQueue(  );
         crmQueue.setCRMItem( crmItem );
-        CRMItemQueueHome.create( crmQueue );
+        _crmItemQueueDAO.insert( crmQueue, getPlugin(  ) );
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized ICRMItem consume(  )
     {
-        CRMItemQueue crmItemQueue = CRMItemQueueHome.getNextCRMItemQueue(  );
+        CRMItemQueue crmItemQueue = this.getNextCRMItemQueue(  );
 
         if ( crmItemQueue != null )
         {
-            CRMItemQueueHome.delete( crmItemQueue.getIdCRMItemQueue(  ) );
+            _crmItemQueueDAO.delete( crmItemQueue.getIdCRMItemQueue(  ), getPlugin(  ) );
 
             return crmItemQueue.getCRMItem(  );
         }
@@ -75,8 +86,38 @@ public class DatabaseQueue implements ICRMClientQueue
     /**
      * {@inheritDoc}
      */
+    @Override
     public int size(  )
     {
-        return CRMItemQueueHome.getCRMItemNumber(  );
+        return _crmItemQueueDAO.getCountCRMItem( getPlugin(  ) );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CRMItemQueue getNextCRMItemQueue(  )
+    {
+        // Get the id of the next mail item queue
+        int nIdCRMItemQueue = _crmItemQueueDAO.nextCRMItemQueueId( getPlugin(  ) );
+
+        if ( nIdCRMItemQueue != -1 )
+        {
+            // Lock the mail item queue before getting notificationItemQueue Object
+            _crmItemQueueDAO.lockCRMItemQueue( nIdCRMItemQueue, getPlugin(  ) );
+
+            return _crmItemQueueDAO.load( nIdCRMItemQueue, getPlugin(  ) );
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the plugin
+     * @return the plugin
+     */
+    private Plugin getPlugin(  )
+    {
+        return PluginService.getPlugin( CRMClientPlugin.PLUGIN_NAME );
     }
 }

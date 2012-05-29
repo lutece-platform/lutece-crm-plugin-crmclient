@@ -53,8 +53,25 @@ public class DemandItem extends AbstractCRMItem
     private static final String PROPERTY_WS_CRM_DEMAND_UPDATE_URL = "crmclient.crm.rest.demand.update.url";
 
     /**
+     * Constructor
+     */
+    public DemandItem(  )
+    {
+    }
+
+    /**
+     * Constructor
+     * @param strCRMWebAppBaseURL the CRM webapp base URL
+     */
+    public DemandItem( String strCRMWebAppBaseURL )
+    {
+        setCRMWebAppBaseURL( strCRMWebAppBaseURL );
+    }
+
+    /**
      * {@inheritDoc}
      */
+    @Override
     public String getUrlForWS(  ) throws CRMClientException
     {
         String strCRMRestUpdateDemandUrl = AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_UPDATE_URL );

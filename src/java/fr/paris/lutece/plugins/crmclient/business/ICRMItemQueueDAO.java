@@ -59,7 +59,7 @@ public interface ICRMItemQueueDAO
     CRMItemQueue load( int nIdCRMItemQueue, Plugin plugin );
 
     /**
-     * Delete the crm item record in the table
+     * Delete the crm item queue in the table
      * @param nIdCRMItemQueue The indentifier of the crm item to remove
      * @param plugin {@link Plugin}
      */

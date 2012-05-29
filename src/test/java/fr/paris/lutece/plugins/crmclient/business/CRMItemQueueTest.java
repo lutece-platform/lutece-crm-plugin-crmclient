@@ -33,6 +33,12 @@
  */
 package fr.paris.lutece.plugins.crmclient.business;
 
+import fr.paris.lutece.plugins.crmclient.service.CRMClientPlugin;
+import fr.paris.lutece.plugins.crmclient.service.queue.DatabaseQueue;
+import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
+import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.test.LuteceTestCase;
 
 import java.util.Map.Entry;
@@ -46,18 +52,23 @@ import java.util.Map.Entry;
 public class CRMItemQueueTest extends LuteceTestCase
 {
     /**
-    * Test business of class fr.paris.lutece.plugins.crmclient.business.CRMItemQueue
-    */
+     * Test business of class fr.paris.lutece.plugins.crmclient.business.CRMItemQueue
+     */
     public void testBusiness(  )
     {
+        Plugin plugin = PluginService.getPlugin( CRMClientPlugin.PLUGIN_NAME );
+
         // Initialize an object
         CRMItemQueue queue = new CRMItemQueue(  );
         queue.setCRMItem( new MokeCRMItem(  ) );
 
-        // Test create
-        CRMItemQueueHome.create( queue );
+        ICRMClientQueue clientQueue = SpringContextService.getBean( DatabaseQueue.BEAN_SERVICE );
+        ICRMItemQueueDAO dao = SpringContextService.getBean( "crmclient.crmItemQueueDAO" );
 
-        CRMItemQueue queueStored = CRMItemQueueHome.getNextCRMItemQueue(  );
+        // Test create
+        dao.insert( queue, plugin );
+
+        CRMItemQueue queueStored = clientQueue.getNextCRMItemQueue(  );
         assertEquals( queue.getIdCRMItemQueue(  ), queueStored.getIdCRMItemQueue(  ) );
 
         for ( Entry<String, String> parameter : queue.getCRMItem(  ).getParameters(  ).entrySet(  ) )
@@ -67,11 +78,11 @@ public class CRMItemQueueTest extends LuteceTestCase
         }
 
         // Test finders
-        CRMItemQueueHome.getCRMItemNumber(  );
+        dao.getCountCRMItem( plugin );
 
         // Test delete
-        CRMItemQueueHome.delete( queue.getIdCRMItemQueue(  ) );
-        queueStored = CRMItemQueueHome.getNextCRMItemQueue(  );
+        dao.delete( queue.getIdCRMItemQueue(  ), plugin );
+        queueStored = clientQueue.getNextCRMItemQueue(  );
         assertNull( queueStored );
     }
 }

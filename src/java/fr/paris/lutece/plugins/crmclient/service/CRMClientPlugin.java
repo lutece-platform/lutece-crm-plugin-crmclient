@@ -44,11 +44,4 @@ import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
 public class CRMClientPlugin extends PluginDefaultImplementation
 {
     public static final String PLUGIN_NAME = "crmclient";
-
-    /**
-     * Initialize the CRMClientPlugin
-     */
-    public void init(  )
-    {
-    }
 }

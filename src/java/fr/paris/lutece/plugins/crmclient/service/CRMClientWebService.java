@@ -34,13 +34,20 @@
 package fr.paris.lutece.plugins.crmclient.service;
 
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
-import fr.paris.lutece.plugins.crmclient.service.signrequest.CRMClientRequestAuthenticatorService;
 import fr.paris.lutece.plugins.crmclient.util.http.IWebServiceCaller;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
+import fr.paris.lutece.util.signrequest.RequestAuthenticator;
+
+import org.springframework.beans.factory.InitializingBean;
+
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 
 /**
@@ -48,18 +55,37 @@ import java.util.Map.Entry;
  * CRMClientWebService
  *
  */
-public class CRMClientWebService
+public class CRMClientWebService extends AbstractCRMClientService implements InitializingBean
 {
-    private IWebServiceCaller _webServiceCaller;
     private List<String> _listSignatureElements;
+    @Inject
+    @Named( "crmclient.webServiceCaller" )
+    private IWebServiceCaller _webServiceCaller;
+    @Inject
+    @Named( "crmclient.requestAuthenticator" )
+    private RequestAuthenticator _requestAuthenticator;
 
     /**
-     * Set the webservice caller
-     * @param webServiceCaller the webservice caller
+     * {@inheritDoc}
      */
-    public void setWebServiceCaller( IWebServiceCaller webServiceCaller )
+    @Override
+    public void doProcess( ICRMItem crmItem ) throws HttpAccessException, CRMClientException
     {
-        _webServiceCaller = webServiceCaller;
+        // List elements to include to the signature
+        List<String> listElements = buildListElements( crmItem );
+
+        _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ), _requestAuthenticator,
+            listElements );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void afterPropertiesSet(  ) throws Exception
+    {
+        Assert.notNull( _webServiceCaller, "The WebService Caller must be set." );
+        Assert.notNull( _listSignatureElements, "The list of signature elements must be set." );
     }
 
     /**
@@ -72,18 +98,12 @@ public class CRMClientWebService
     }
 
     /**
-     * Calls the CRM Notification REST WS to notify/update a demand
-     * @param crmItem the crm item
-     * @throws HttpAccessException exception if connexion problem
-     * @throws CRMClientException exception if application not well configured
+     * Set the web service caller
+     * @param webServiceCaller the web service caller
      */
-    public void doProcess( ICRMItem crmItem ) throws HttpAccessException, CRMClientException
+    public void setWebServiceCaller( IWebServiceCaller webServiceCaller )
     {
-        // List elements to include to the signature
-        List<String> listElements = buildListElements( crmItem );
-
-        _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ),
-            CRMClientRequestAuthenticatorService.getRequestAuthenticator(  ), listElements );
+        _webServiceCaller = webServiceCaller;
     }
 
     /**
