@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crmclient.service;
+package fr.paris.lutece.plugins.crmclient.service.processor;
 
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.plugins.crmclient.util.http.IWebServiceCaller;
@@ -52,10 +52,10 @@ import javax.inject.Named;
 
 /**
  *
- * CRMClientWebService
+ * CRMClientWSProcessor
  *
  */
-public class CRMClientWebService extends AbstractCRMClientService implements InitializingBean
+public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBean
 {
     private List<String> _listSignatureElements;
     @Inject
@@ -69,7 +69,7 @@ public class CRMClientWebService extends AbstractCRMClientService implements Ini
      * {@inheritDoc}
      */
     @Override
-    public void doProcess( ICRMItem crmItem ) throws HttpAccessException, CRMClientException
+    public void doProcess( ICRMItem crmItem ) throws HttpAccessException
     {
         // List elements to include to the signature
         List<String> listElements = buildListElements( crmItem );

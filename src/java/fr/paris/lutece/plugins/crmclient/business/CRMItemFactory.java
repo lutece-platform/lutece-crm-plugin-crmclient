@@ -33,47 +33,58 @@
  */
 package fr.paris.lutece.plugins.crmclient.business;
 
-import fr.paris.lutece.plugins.crmclient.service.CRMClientException;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 
-import java.util.Map;
+import org.apache.commons.lang.StringUtils;
+
+import org.springframework.beans.factory.BeanDefinitionStoreException;
+import org.springframework.beans.factory.CannotLoadBeanClassException;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 
 /**
  *
- * ICRMItem
+ * CRMItemFactory
  *
  */
-public interface ICRMItem
+public class CRMItemFactory implements ICRMItemFactory
 {
     /**
-     * Get the url for WS
-     * @return the url for WS
-     * @throws CRMClientException exception if there is an error
+     * {@inheritDoc}
      */
-    String getUrlForWS(  ) throws CRMClientException;
+    @Override
+    public ICRMItem newCRMItem( String strBeanName )
+    {
+        if ( StringUtils.isBlank( strBeanName ) )
+        {
+            AppLogService.error( "CRMItemFactory ERROR : The bean name is empty." );
 
-    /**
-     * Set the parameters of the crm item
-     * @param mapParameters the parameters
-     */
-    void setParameters( Map<String, String> mapParameters );
+            return null;
+        }
 
-    /**
-     * Get the parameters
-     * @return the parameters
-     */
-    Map<String, String> getParameters(  );
+        try
+        {
+            ICRMItem crmItem = SpringContextService.getBean( strBeanName );
 
-    /**
-     * Set the CRM webapp base URL
-     * @param strCRMWebAppBaseURL the CRM webapp URL
-     */
-    void setCRMWebAppBaseURL( String strCRMWebAppBaseURL );
+            return crmItem;
+        }
+        catch ( BeanDefinitionStoreException e )
+        {
+            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName(  ) + "' - CAUSE : " +
+                e.getMessage(  ), e );
+        }
+        catch ( NoSuchBeanDefinitionException e )
+        {
+            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName(  ) + "' - CAUSE : " +
+                e.getMessage(  ), e );
+        }
+        catch ( CannotLoadBeanClassException e )
+        {
+            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName(  ) + "' - CAUSE : " +
+                e.getMessage(  ), e );
+        }
 
-    /**
-     * Pu a new parameter to the map parameters
-     * @param strKey the key of the parameter
-     * @param strValue the value of the parameter
-     */
-    void putParameter( String strKey, String strValue );
+        return null;
+    }
 }

@@ -33,8 +33,7 @@
  */
 package fr.paris.lutece.plugins.crmclient.business.notification;
 
-import fr.paris.lutece.plugins.crmclient.business.AbstractCRMItem;
-import fr.paris.lutece.plugins.crmclient.service.CRMClientException;
+import fr.paris.lutece.plugins.crmclient.business.CRMItem;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 import org.apache.commons.lang.StringUtils;
@@ -45,43 +44,34 @@ import org.apache.commons.lang.StringUtils;
  * NotificationItem
  *
  */
-public class NotificationItem extends AbstractCRMItem
+public class NotificationItem extends CRMItem
 {
     private static final long serialVersionUID = 8068092823469933679L;
 
     // PROPERTIES
+    private static final String PROPERTY_WS_CRM_REST_WEBAPP_URL = "crmclient.crm.rest.webapp.url";
     private static final String PROPERTY_WS_CRM_DEMAND_NOTIFY_URL = "crmclient.crm.rest.demand.notify.url";
 
     /**
-     * Constructor
+     * {@inheritDoc}
      */
-    public NotificationItem(  )
+    @Override
+    public String getUrlForWS(  )
     {
-    }
-
-    /**
-     * Constructor
-     * @param strCRMWebAppBaseURL the CRM webapp base URL
-     */
-    public NotificationItem( String strCRMWebAppBaseURL )
-    {
-        setCRMWebAppBaseURL( strCRMWebAppBaseURL );
+        return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS(  ) throws CRMClientException
+    public String getCRMWebAppBaseURL(  )
     {
-        String strCRMRestNotifyDemandUrl = AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );
-
-        if ( StringUtils.isBlank( strCRMRestNotifyDemandUrl ) )
+        if ( StringUtils.isBlank( super.getCRMWebAppBaseURL(  ) ) )
         {
-            throw new CRMClientException( 
-                "CRMClient - NotificationItem - Could not retrieve the CRM rest for notifying demand URL : The property file 'crmclient.properties' is not well configured." );
+            return AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_WEBAPP_URL );
         }
 
-        return getCRMRestWebappUrl(  ) + strCRMRestNotifyDemandUrl;
+        return super.getCRMWebAppBaseURL(  );
     }
 }

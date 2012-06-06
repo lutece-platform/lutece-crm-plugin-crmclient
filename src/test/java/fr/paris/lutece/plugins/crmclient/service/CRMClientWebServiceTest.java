@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.crmclient.service;
 
 import fr.paris.lutece.plugins.crmclient.business.MokeCRMItem;
+import fr.paris.lutece.plugins.crmclient.service.processor.CRMClientWSProcessor;
 import fr.paris.lutece.plugins.crmclient.util.http.MokeWebServiceCaller;
 import fr.paris.lutece.test.LuteceTestCase;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
@@ -59,7 +60,7 @@ public class CRMClientWebServiceTest extends LuteceTestCase
     {
         System.out.println( "doProcess" );
 
-        CRMClientWebService webService = new CRMClientWebService(  );
+        CRMClientWSProcessor webService = new CRMClientWSProcessor(  );
         webService.setWebServiceCaller( new MokeWebServiceCaller(  ) );
 
         List<String> listElements = new ArrayList<String>(  );
@@ -72,10 +73,6 @@ public class CRMClientWebServiceTest extends LuteceTestCase
             webService.doProcess( new MokeCRMItem(  ) );
         }
         catch ( HttpAccessException e )
-        {
-            fail(  );
-        }
-        catch ( CRMClientException e )
         {
             fail(  );
         }

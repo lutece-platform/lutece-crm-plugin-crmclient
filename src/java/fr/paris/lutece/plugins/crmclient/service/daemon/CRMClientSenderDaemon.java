@@ -34,8 +34,7 @@
 package fr.paris.lutece.plugins.crmclient.service.daemon;
 
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
-import fr.paris.lutece.plugins.crmclient.service.CRMClientException;
-import fr.paris.lutece.plugins.crmclient.service.ICRMClientService;
+import fr.paris.lutece.plugins.crmclient.service.processor.ICRMClientProcessor;
 import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
 import fr.paris.lutece.portal.service.daemon.Daemon;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -58,8 +57,8 @@ public class CRMClientSenderDaemon extends Daemon
     public synchronized void run(  )
     {
         StringBuilder sbLog = new StringBuilder(  );
-        ICRMClientService crmClientService = SpringContextService.getBean( ICRMClientService.BEAN_SERVICE );
-        ICRMClientQueue queue = crmClientService.getQueue(  );
+        ICRMClientProcessor crmClientService = SpringContextService.getBean( ICRMClientProcessor.BEAN_PROCESSOR );
+        ICRMClientQueue queue = SpringContextService.getBean( ICRMClientQueue.BEAN_SERVICE );
 
         if ( ( queue != null ) && ( queue.size(  ) > 0 ) )
         {
@@ -80,17 +79,6 @@ public class CRMClientSenderDaemon extends Daemon
                         crmClientService.doProcess( crmItem );
                     }
                     catch ( HttpAccessException e )
-                    {
-                        AppLogService.error( e.getMessage(  ), e );
-                        // If connection failed, then put the item back to the file
-                        queue.send( crmItem );
-                        bIsSent = false;
-                        sbLog.append( "NOK" );
-                        sbLog.append( "\n\t" + e.getMessage(  ) );
-
-                        break;
-                    }
-                    catch ( CRMClientException e )
                     {
                         AppLogService.error( e.getMessage(  ), e );
                         // Put the item back to the file

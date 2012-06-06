@@ -33,15 +33,13 @@
  */
 package fr.paris.lutece.plugins.crmclient.business;
 
-import fr.paris.lutece.plugins.crmclient.service.CRMClientException;
-
 
 /**
  *
  * MokeCRMItem
  *
  */
-public class MokeCRMItem extends AbstractCRMItem
+public class MokeCRMItem extends CRMItem
 {
     private static final long serialVersionUID = -4826593930006759549L;
     private static final String URL_FOR_WS = "UrlForWs";
@@ -63,7 +61,7 @@ public class MokeCRMItem extends AbstractCRMItem
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS(  ) throws CRMClientException
+    public String getUrlForWS(  )
     {
         return URL_FOR_WS;
     }

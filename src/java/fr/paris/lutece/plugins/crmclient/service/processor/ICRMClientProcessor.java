@@ -31,40 +31,25 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crmclient.service.queue;
+package fr.paris.lutece.plugins.crmclient.service.processor;
 
-import fr.paris.lutece.plugins.crmclient.business.CRMItemQueue;
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
+import fr.paris.lutece.util.httpaccess.HttpAccessException;
 
 
 /**
  *
- * ICRMClientQueue
+ * CRMClientProcessor
  *
  */
-public interface ICRMClientQueue
+public interface ICRMClientProcessor
 {
-    /**
-     * Get a crm item from the list and remove it from the queue
-     * @return The older crm item of the queue
-     */
-    ICRMItem consume(  );
+    String BEAN_PROCESSOR = "crmclient.crmClientProcessor";
 
     /**
-     * Put a crm item into the list of the queue
-     * @param crmItem The crm item to add to the queue
-     */
-    void send( ICRMItem crmItem );
-
-    /**
-     * Get the size of the queue
-     * @return the number of crm item present in the queue
-     */
-    int size(  );
-
-    /**
-     * Return the first crm item in the queue
-     * @return the first crm item in the queue
-     */
-    CRMItemQueue getNextCRMItemQueue(  );
+    * Calls WS to notify/update a demand
+    * @param crmItem the crm item
+    * @throws HttpAccessException exception if there are errors
+    */
+    void doProcess( ICRMItem crmItem ) throws HttpAccessException;
 }

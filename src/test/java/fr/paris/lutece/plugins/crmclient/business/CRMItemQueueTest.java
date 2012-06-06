@@ -33,11 +33,8 @@
  */
 package fr.paris.lutece.plugins.crmclient.business;
 
-import fr.paris.lutece.plugins.crmclient.service.CRMClientPlugin;
 import fr.paris.lutece.plugins.crmclient.service.queue.DatabaseQueue;
 import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
-import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.portal.service.plugin.PluginService;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.test.LuteceTestCase;
 
@@ -56,8 +53,6 @@ public class CRMItemQueueTest extends LuteceTestCase
      */
     public void testBusiness(  )
     {
-        Plugin plugin = PluginService.getPlugin( CRMClientPlugin.PLUGIN_NAME );
-
         // Initialize an object
         CRMItemQueue queue = new CRMItemQueue(  );
         queue.setCRMItem( new MokeCRMItem(  ) );
@@ -66,7 +61,7 @@ public class CRMItemQueueTest extends LuteceTestCase
         ICRMItemQueueDAO dao = SpringContextService.getBean( "crmclient.crmItemQueueDAO" );
 
         // Test create
-        dao.insert( queue, plugin );
+        dao.insert( queue );
 
         CRMItemQueue queueStored = clientQueue.getNextCRMItemQueue(  );
         assertEquals( queue.getIdCRMItemQueue(  ), queueStored.getIdCRMItemQueue(  ) );
@@ -78,10 +73,10 @@ public class CRMItemQueueTest extends LuteceTestCase
         }
 
         // Test finders
-        dao.getCountCRMItem( plugin );
+        dao.getCountCRMItem(  );
 
         // Test delete
-        dao.delete( queue.getIdCRMItemQueue(  ), plugin );
+        dao.delete( queue.getIdCRMItemQueue(  ) );
         queueStored = clientQueue.getNextCRMItemQueue(  );
         assertNull( queueStored );
     }

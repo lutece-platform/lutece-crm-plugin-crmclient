@@ -33,7 +33,7 @@
  */
 package fr.paris.lutece.plugins.crmclient.business;
 
-import fr.paris.lutece.portal.service.plugin.Plugin;
+import fr.paris.lutece.plugins.crmclient.service.CRMClientPlugin;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.sql.DAOUtil;
 import fr.paris.lutece.util.sql.Transaction;
@@ -64,12 +64,11 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
 
     /**
      * Generates a new primary key
-     * @param plugin {@link Plugin}
      * @return The new primary key
      */
-    private int newPrimaryKey( Plugin plugin )
+    private int newPrimaryKey(  )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, CRMClientPlugin.getPlugin(  ) );
         daoUtil.executeQuery(  );
 
         int nKey = 1;
@@ -88,9 +87,9 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public int nextCRMItemQueueId( Plugin plugin )
+    public int nextCRMItemQueueId(  )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_CRM_ITEM_QUEUE_ID, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_CRM_ITEM_QUEUE_ID, CRMClientPlugin.getPlugin(  ) );
 
         daoUtil.executeQuery(  );
 
@@ -110,9 +109,9 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public void lockCRMItemQueue( int nIdCRMItemQueue, Plugin plugin )
+    public void lockCRMItemQueue( int nIdCRMItemQueue )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOCK_CRM_ITEM, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOCK_CRM_ITEM, CRMClientPlugin.getPlugin(  ) );
         daoUtil.setInt( 1, nIdCRMItemQueue );
         daoUtil.executeUpdate(  );
         daoUtil.free(  );
@@ -122,7 +121,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public synchronized void insert( CRMItemQueue crmItemQueue, Plugin plugin )
+    public synchronized void insert( CRMItemQueue crmItemQueue )
     {
         Transaction transaction = null;
 
@@ -135,9 +134,9 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
             objectOutputStream.close(  );
             byteArrayOutputStream.close(  );
 
-            transaction = new Transaction( plugin );
+            transaction = new Transaction( CRMClientPlugin.getPlugin(  ) );
 
-            int nNewPrimaryKey = newPrimaryKey( plugin );
+            int nNewPrimaryKey = newPrimaryKey(  );
             crmItemQueue.setIdCRMItemQueue( nNewPrimaryKey );
             transaction.prepareStatement( SQL_QUERY_INSERT );
             transaction.getStatement(  ).setInt( 1, nNewPrimaryKey );
@@ -164,12 +163,12 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public CRMItemQueue load( int nIdCRMItemQueue, Plugin plugin )
+    public CRMItemQueue load( int nIdCRMItemQueue )
     {
         CRMItemQueue crmItemQueue = null;
         ICRMItem crmItem = null;
         InputStream inputStream;
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOAD_CRM_ITEM, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOAD_CRM_ITEM, CRMClientPlugin.getPlugin(  ) );
         daoUtil.setInt( 1, nIdCRMItemQueue );
         daoUtil.executeQuery(  );
 
@@ -207,9 +206,9 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public void delete( int nIdCRMItemQueue, Plugin plugin )
+    public void delete( int nIdCRMItemQueue )
     {
-        Transaction transaction = new Transaction( plugin );
+        Transaction transaction = new Transaction( CRMClientPlugin.getPlugin(  ) );
 
         try
         {
@@ -233,9 +232,9 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public int getCountCRMItem( Plugin plugin )
+    public int getCountCRMItem(  )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT, CRMClientPlugin.getPlugin(  ) );
         daoUtil.executeQuery(  );
 
         int nCount = 0;

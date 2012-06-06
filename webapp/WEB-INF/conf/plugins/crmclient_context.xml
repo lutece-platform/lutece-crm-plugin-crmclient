@@ -21,16 +21,20 @@
 		<value>id_status_crm</value>
 	</util:list>
 	
+	<!-- CRM Items -->
+	<bean id="crmclient.crmItemDemand" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItem" scope="prototype" />
+	<bean id="crmclient.crmItemNotification" class="fr.paris.lutece.plugins.crmclient.business.notification.NotificationItem" scope="prototype" />
+	
 	<!-- DAO -->
 	<bean id="crmclient.crmItemQueueDAO" class="fr.paris.lutece.plugins.crmclient.business.CRMItemQueueDAO"/>
 	
-	<!-- Web Service -->
-	<bean id="crmclient.webServiceCaller" class="fr.paris.lutece.plugins.crmclient.util.http.WebServiceCaller" />
-    <bean id="crmclient.crmClientService" class="fr.paris.lutece.plugins.crmclient.service.CRMClientWebService"
-    	p:signatureElements-ref="crmclient.signatureElements" />
-
 	<!-- Services -->
-	<bean id="crmclient.databaseQueue" class="fr.paris.lutece.plugins.crmclient.service.queue.DatabaseQueue" />
+	<bean id="crmclient.webServiceCaller" class="fr.paris.lutece.plugins.crmclient.util.http.WebServiceCaller" />
+    <bean id="crmclient.crmClientProcessor" class="fr.paris.lutece.plugins.crmclient.service.processor.CRMClientWSProcessor"
+    	p:signatureElements-ref="crmclient.signatureElements" />
+    <bean id="crmclient.crmClientService" class="fr.paris.lutece.plugins.crmclient.service.CRMClientService" />
+	<bean id="crmclient.queue" class="fr.paris.lutece.plugins.crmclient.service.queue.DatabaseQueue" />
+	<bean id="crmclient.crmItemFactory" class="fr.paris.lutece.plugins.crmclient.business.CRMItemFactory" />
 
 	<!-- SignRequest -->
     <bean id="crmclient.hashService" class="fr.paris.lutece.util.signrequest.security.Sha1HashService" />
