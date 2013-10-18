@@ -33,21 +33,22 @@
  */
 package fr.paris.lutece.plugins.crmclient.service.processor;
 
+import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
+import fr.paris.lutece.plugins.crmclient.service.authenticator.AuthenticatorService;
+import fr.paris.lutece.plugins.crmclient.util.CRMException;
+import fr.paris.lutece.plugins.crmclient.util.http.HttpMethodEnum;
+import fr.paris.lutece.plugins.crmclient.util.http.IWebServiceCaller;
+
+import org.springframework.beans.factory.InitializingBean;
+
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.util.Assert;
-
-import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
-import fr.paris.lutece.plugins.crmclient.service.authenticator.AuthenticatorService;
-import fr.paris.lutece.plugins.crmclient.util.CRMException;
-import fr.paris.lutece.plugins.crmclient.util.http.HttpMethodEnum;
-import fr.paris.lutece.plugins.crmclient.util.http.IWebServiceCaller;
 
 
 /**
@@ -74,10 +75,11 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
         // List elements to include to the signature
         List<String> listElements = buildListElements( crmItem );
 
-        return _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ), _authenticatorService.getRequestAuthenticatorForWs(crmItem.getCRMWebAppCode()),
-            listElements,HttpMethodEnum.POST );
+        return _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ),
+            _authenticatorService.getRequestAuthenticatorForWs( crmItem.getCRMWebAppCode(  ) ), listElements,
+            HttpMethodEnum.POST );
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -87,12 +89,10 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
         // List elements to include to the signature
         List<String> listElements = buildListElements( crmItem );
 
-        return _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ), _authenticatorService.getRequestAuthenticatorForWs(crmItem.getCRMWebAppCode()),
-            listElements,HttpMethodEnum.GET );
+        return _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ),
+            _authenticatorService.getRequestAuthenticatorForWs( crmItem.getCRMWebAppCode(  ) ), listElements,
+            HttpMethodEnum.GET );
     }
-
-    
-    
 
     /**
      * {@inheritDoc}

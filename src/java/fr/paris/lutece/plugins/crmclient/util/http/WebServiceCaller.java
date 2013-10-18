@@ -62,7 +62,8 @@ public class WebServiceCaller implements IWebServiceCaller
      */
     @Override
     public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
-        List<String> listElements,HttpMethodEnum httpMethod ) throws CRMException
+        List<String> listElements, HttpMethodEnum httpMethod )
+        throws CRMException
     {
         String strResponse = StringUtils.EMPTY;
 
@@ -74,13 +75,14 @@ public class WebServiceCaller implements IWebServiceCaller
         try
         {
             HttpAccess httpAccess = new HttpAccess(  );
-            if(httpMethod == HttpMethodEnum.POST)
+
+            if ( httpMethod == HttpMethodEnum.POST )
             {
-            	strResponse = httpAccess.doPost( strUrl, mapParameters, authenticator, listElements );
+                strResponse = httpAccess.doPost( strUrl, mapParameters, authenticator, listElements );
             }
             else
             {
-            	strResponse = httpAccess.doGet( strUrl, authenticator, listElements );
+                strResponse = httpAccess.doGet( strUrl, authenticator, listElements );
             }
         }
         catch ( HttpAccessException e )

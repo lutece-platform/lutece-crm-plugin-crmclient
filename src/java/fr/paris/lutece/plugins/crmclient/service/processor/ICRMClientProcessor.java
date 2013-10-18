@@ -52,11 +52,11 @@ public interface ICRMClientProcessor
     * @throws CRMException exception if there are errors
     */
     String doProcess( ICRMItem crmItem ) throws CRMException;
+
     /**
      * Calls WS to get information on demand or user
      * @param crmItem the crm item
      * @throws CRMException exception if there are errors
      */
-     String getProcess( ICRMItem crmItem ) throws CRMException;
-    
+    String getProcess( ICRMItem crmItem ) throws CRMException;
 }

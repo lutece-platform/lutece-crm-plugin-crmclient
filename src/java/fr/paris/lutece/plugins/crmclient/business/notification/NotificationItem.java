@@ -47,7 +47,7 @@ public class NotificationItem extends CRMItem
     private static final long serialVersionUID = 8068092823469933679L;
 
     // PROPERTIES
-     private static final String PROPERTY_WS_CRM_DEMAND_NOTIFY_URL = "crmclient.crm.rest.demand.notify.url";
+    private static final String PROPERTY_WS_CRM_DEMAND_NOTIFY_URL = "crmclient.crm.rest.demand.notify.url";
 
     /**
      * {@inheritDoc}
@@ -57,5 +57,4 @@ public class NotificationItem extends CRMItem
     {
         return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );
     }
-
 }

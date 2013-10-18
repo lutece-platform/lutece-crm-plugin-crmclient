@@ -33,8 +33,6 @@
  */
 package fr.paris.lutece.plugins.crmclient.service.daemon;
 
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.plugins.crmclient.service.processor.ICRMClientProcessor;
 import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
@@ -42,6 +40,8 @@ import fr.paris.lutece.plugins.crmclient.util.CRMException;
 import fr.paris.lutece.portal.service.daemon.Daemon;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**

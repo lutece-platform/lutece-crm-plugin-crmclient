@@ -47,12 +47,4 @@ public abstract class DemandItem extends CRMItem
 
     // PROPERTIES
     protected static final String PROPERTY_WS_CRM_REST_DEMAND_BASE_URL = "crmclient.crm.rest.demand.base_url";
- 
-  
-
-   
-    
-    
-    
-    
 }
