@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.crmclient.util.http;
 
+import fr.paris.lutece.plugins.crmclient.util.CRMException;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.signrequest.RequestAuthenticator;
 
@@ -54,7 +55,7 @@ public class MokeWebServiceCaller extends WebServiceCaller
      */
     @Override
     public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
-        List<String> listElements ) throws HttpAccessException
+        List<String> listElements,HttpMethodEnum httpMethod ) throws CRMException
     {
         String strTrace = trace( strUrl, mapParameters, authenticator, listElements );
         System.out.println( strTrace );

@@ -33,15 +33,15 @@
  */
 package fr.paris.lutece.plugins.crmclient.service.daemon;
 
+import org.apache.commons.lang.StringUtils;
+
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.plugins.crmclient.service.processor.ICRMClientProcessor;
 import fr.paris.lutece.plugins.crmclient.service.queue.ICRMClientQueue;
+import fr.paris.lutece.plugins.crmclient.util.CRMException;
 import fr.paris.lutece.portal.service.daemon.Daemon;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.util.httpaccess.HttpAccessException;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -78,7 +78,7 @@ public class CRMClientSenderDaemon extends Daemon
                     {
                         crmClientService.doProcess( crmItem );
                     }
-                    catch ( HttpAccessException e )
+                    catch ( CRMException e )
                     {
                         AppLogService.error( e.getMessage(  ), e );
                         // Put the item back to the file

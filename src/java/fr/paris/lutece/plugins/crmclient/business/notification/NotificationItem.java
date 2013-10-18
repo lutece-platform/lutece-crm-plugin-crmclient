@@ -36,8 +36,6 @@ package fr.paris.lutece.plugins.crmclient.business.notification;
 import fr.paris.lutece.plugins.crmclient.business.CRMItem;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
-import org.apache.commons.lang.StringUtils;
-
 
 /**
  *
@@ -49,8 +47,7 @@ public class NotificationItem extends CRMItem
     private static final long serialVersionUID = 8068092823469933679L;
 
     // PROPERTIES
-    private static final String PROPERTY_WS_CRM_REST_WEBAPP_URL = "crmclient.crm.rest.webapp.url";
-    private static final String PROPERTY_WS_CRM_DEMAND_NOTIFY_URL = "crmclient.crm.rest.demand.notify.url";
+     private static final String PROPERTY_WS_CRM_DEMAND_NOTIFY_URL = "crmclient.crm.rest.demand.notify.url";
 
     /**
      * {@inheritDoc}
@@ -61,17 +58,4 @@ public class NotificationItem extends CRMItem
         return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getCRMWebAppBaseURL(  )
-    {
-        if ( StringUtils.isBlank( super.getCRMWebAppBaseURL(  ) ) )
-        {
-            return AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_WEBAPP_URL );
-        }
-
-        return super.getCRMWebAppBaseURL(  );
-    }
 }

@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.crmclient.util.http;
 
+import fr.paris.lutece.plugins.crmclient.util.CRMException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.util.httpaccess.HttpAccess;
 import fr.paris.lutece.util.httpaccess.HttpAccessException;
@@ -61,7 +62,7 @@ public class WebServiceCaller implements IWebServiceCaller
      */
     @Override
     public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
-        List<String> listElements ) throws HttpAccessException
+        List<String> listElements,HttpMethodEnum httpMethod ) throws CRMException
     {
         String strResponse = StringUtils.EMPTY;
 
@@ -73,13 +74,20 @@ public class WebServiceCaller implements IWebServiceCaller
         try
         {
             HttpAccess httpAccess = new HttpAccess(  );
-            strResponse = httpAccess.doPost( strUrl, mapParameters, authenticator, listElements );
+            if(httpMethod == HttpMethodEnum.POST)
+            {
+            	strResponse = httpAccess.doPost( strUrl, mapParameters, authenticator, listElements );
+            }
+            else
+            {
+            	strResponse = httpAccess.doGet( strUrl, authenticator, listElements );
+            }
         }
         catch ( HttpAccessException e )
         {
             String strError = "Error connecting to '" + strUrl + "' : ";
             AppLogService.error( strError + e.getMessage(  ), e );
-            throw new HttpAccessException( strError, e );
+            throw new CRMException( strError, e );
         }
 
         return strResponse;

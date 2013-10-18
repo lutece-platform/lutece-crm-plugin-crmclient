@@ -33,21 +33,21 @@
  */
 package fr.paris.lutece.plugins.crmclient.service.processor;
 
-import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
-import fr.paris.lutece.plugins.crmclient.util.http.IWebServiceCaller;
-import fr.paris.lutece.util.httpaccess.HttpAccessException;
-import fr.paris.lutece.util.signrequest.RequestAuthenticator;
-
-import org.springframework.beans.factory.InitializingBean;
-
-import org.springframework.util.Assert;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
+
+import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
+import fr.paris.lutece.plugins.crmclient.service.authenticator.AuthenticatorService;
+import fr.paris.lutece.plugins.crmclient.util.CRMException;
+import fr.paris.lutece.plugins.crmclient.util.http.HttpMethodEnum;
+import fr.paris.lutece.plugins.crmclient.util.http.IWebServiceCaller;
 
 
 /**
@@ -62,21 +62,37 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
     @Named( "crmclient.webServiceCaller" )
     private IWebServiceCaller _webServiceCaller;
     @Inject
-    @Named( "crmclient.requestAuthenticator" )
-    private RequestAuthenticator _requestAuthenticator;
+    @Named( "crmclient.requestAuthenticatorService" )
+    private AuthenticatorService _authenticatorService;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void doProcess( ICRMItem crmItem ) throws HttpAccessException
+    public String doProcess( ICRMItem crmItem ) throws CRMException
     {
         // List elements to include to the signature
         List<String> listElements = buildListElements( crmItem );
 
-        _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ), _requestAuthenticator,
-            listElements );
+        return _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ), _authenticatorService.getRequestAuthenticatorForWs(crmItem.getCRMWebAppCode()),
+            listElements,HttpMethodEnum.POST );
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getProcess( ICRMItem crmItem ) throws CRMException
+    {
+        // List elements to include to the signature
+        List<String> listElements = buildListElements( crmItem );
+
+        return _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ), _authenticatorService.getRequestAuthenticatorForWs(crmItem.getCRMWebAppCode()),
+            listElements,HttpMethodEnum.GET );
+    }
+
+    
+    
 
     /**
      * {@inheritDoc}

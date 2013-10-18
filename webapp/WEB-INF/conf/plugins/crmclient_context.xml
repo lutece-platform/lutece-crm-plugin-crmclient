@@ -22,9 +22,18 @@
 	</util:list>
 	
 	<!-- CRM Items -->
-	<bean id="crmclient.crmItemDemand" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItem" scope="prototype" />
 	<bean id="crmclient.crmItemNotification" class="fr.paris.lutece.plugins.crmclient.business.notification.NotificationItem" scope="prototype" />
-	
+	<bean id="crmclient.crmItemDemandUpdate" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemUpdate" scope="prototype" />
+	<bean id="crmclient.crmItemDemandCreateByUserGuid" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemCreateByUserGuid" scope="prototype" />
+	<bean id="crmclient.crmItemDemandCreateByIdCRMUser" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemCreateByIdCRMUser" scope="prototype" />
+	<bean id="crmclient.crmItemDemandDelete" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemDelete" scope="prototype" />
+	<bean id="crmclient.crmItemDemandUserGuid" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemUserGuid" scope="prototype" />
+	<bean id="crmclient.crmItemDemandDemandJson" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemDemandJson" scope="prototype" />
+	<bean id="crmclient.crmItemDemandDemandXml" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemDemandXml" scope="prototype" />
+	<bean id="crmclient.crmItemUserGuidByIdCRMUser" class="fr.paris.lutece.plugins.crmclient.business.user.UserItemGuidByIdCRMUser" scope="prototype" />
+	<bean id="crmclient.crmItemUserAttribute" class="fr.paris.lutece.plugins.crmclient.business.user.UserItemAttribute" scope="prototype" />
+	<bean id="crmclient.crmItemUserAttributesXml" class="fr.paris.lutece.plugins.crmclient.business.user.UserItemAttributesXml" scope="prototype" />
+	<bean id="crmclient.crmItemUserAttributesJson" class="fr.paris.lutece.plugins.crmclient.business.user.UserItemAttributesJson" scope="prototype" />
 	<!-- DAO -->
 	<bean id="crmclient.crmItemQueueDAO" class="fr.paris.lutece.plugins.crmclient.business.CRMItemQueueDAO"/>
 	
@@ -37,13 +46,47 @@
 	<bean id="crmclient.crmItemFactory" class="fr.paris.lutece.plugins.crmclient.business.CRMItemFactory" />
 
 	<!-- SignRequest -->
+	<bean id="crmclient.requestAuthenticatorService" class="fr.paris.lutece.plugins.crmclient.service.authenticator.AuthenticatorService" >
+     	<property name="mapRequestAuthenticatorForWs">
+			<map>
+				<entry key="default" value-ref="crmclient.requestAuthenticatorForWs" />
+				<!--  
+					For Multi crm you can defined multi requestAuthenticator
+					<entry key="crmWebbApp1" value-ref="crmclient.requestAuthenticatorForWs" />
+					<entry key="crmWebbApp2" value-ref="crmclient.requestAuthenticatorForWs" />
+				-->
+			</map>
+		</property>
+		<property name="mapRequestAuthenticatorForUrl">
+			<map>
+				<entry key="default" value-ref="crmclient.requestAuthenticatorForUrl" />
+				<!--  
+					For Multi crm you can defined multi requestAuthenticator
+					<entry key="crmWebbApp1" value-ref="crmclient.requestAuthenticatorForUrl" />
+					<entry key="crmWebbApp2" value-ref="crmclient.requestAuthenticatorForUrl" />
+				-->
+			</map>
+		</property>
+     </bean>
     <bean id="crmclient.hashService" class="fr.paris.lutece.util.signrequest.security.Sha1HashService" />
-    <bean id="crmclient.requestAuthenticator" class="fr.paris.lutece.util.signrequest.HeaderHashAuthenticator" >
+    
+    <bean id="crmclient.requestAuthenticatorForWs" class="fr.paris.lutece.util.signrequest.HeaderHashAuthenticator" >
         <property name="hashService" ref="crmclient.hashService" />
         <property name="signatureElements" ref="crmclient.signatureElements" />
         <property name="privateKey">
             <value>change me</value>
         </property>
     </bean>
+    
+    <bean id="crmclient.requestAuthenticatorForUrl" class="fr.paris.lutece.util.signrequest.RequestHashAuthenticator" >
+        <property name="hashService" ref="crmclient.hashService" />
+        <property name="signatureElements" ref="crmclient.signatureElements" />
+        <property name="privateKey">
+       		<value>change me</value>
+        </property>
+    </bean>
+    
+    
+    
 </beans>
  	

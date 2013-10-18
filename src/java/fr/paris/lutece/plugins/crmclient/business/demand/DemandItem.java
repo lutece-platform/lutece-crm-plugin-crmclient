@@ -34,9 +34,6 @@
 package fr.paris.lutece.plugins.crmclient.business.demand;
 
 import fr.paris.lutece.plugins.crmclient.business.CRMItem;
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -44,34 +41,18 @@ import org.apache.commons.lang.StringUtils;
  * DemandItem
  *
  */
-public class DemandItem extends CRMItem
+public abstract class DemandItem extends CRMItem
 {
     private static final long serialVersionUID = 1781761996546052287L;
 
     // PROPERTIES
-    private static final String PROPERTY_WS_CRM_REST_WEBAPP_URL = "crmclient.crm.rest.webapp.url";
-    private static final String PROPERTY_WS_CRM_DEMAND_UPDATE_URL = "crmclient.crm.rest.demand.update.url";
+    protected static final String PROPERTY_WS_CRM_REST_DEMAND_BASE_URL = "crmclient.crm.rest.demand.base_url";
+ 
+  
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getUrlForWS(  )
-    {
-        return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_UPDATE_URL );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getCRMWebAppBaseURL(  )
-    {
-        if ( StringUtils.isBlank( super.getCRMWebAppBaseURL(  ) ) )
-        {
-            return AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_WEBAPP_URL );
-        }
-
-        return super.getCRMWebAppBaseURL(  );
-    }
+   
+    
+    
+    
+    
 }
