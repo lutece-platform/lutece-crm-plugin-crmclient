@@ -204,8 +204,7 @@ public class CRMClientService implements ICRMClientService
         crmItem.putParameter( ICRMItem.STATUS_TEXT,
             StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.DEMAND_DATA,
-            StringUtils.isNotBlank( strData ) ? strData : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.DEMAND_DATA, StringUtils.isNotBlank( strData ) ? strData : StringUtils.EMPTY );
 
         return _crmClientProcessor.doProcess( crmItem );
     }
@@ -244,8 +243,7 @@ public class CRMClientService implements ICRMClientService
         crmItem.putParameter( ICRMItem.STATUS_TEXT,
             StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.DEMAND_DATA,
-            StringUtils.isNotBlank( strData ) ? strData: StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.DEMAND_DATA, StringUtils.isNotBlank( strData ) ? strData : StringUtils.EMPTY );
 
         return _crmClientProcessor.doProcess( crmItem );
     }

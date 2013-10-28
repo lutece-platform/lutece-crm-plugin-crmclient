@@ -33,11 +33,11 @@
  */
 package fr.paris.lutece.plugins.crmclient.util.http;
 
-import java.util.List;
-import java.util.Map;
-
 import fr.paris.lutece.plugins.crmclient.util.CRMException;
 import fr.paris.lutece.util.signrequest.RequestAuthenticator;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**

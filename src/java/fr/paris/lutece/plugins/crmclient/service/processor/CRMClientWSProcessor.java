@@ -33,22 +33,23 @@
  */
 package fr.paris.lutece.plugins.crmclient.service.processor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.util.Assert;
-
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.plugins.crmclient.service.authenticator.AuthenticatorService;
 import fr.paris.lutece.plugins.crmclient.util.CRMException;
 import fr.paris.lutece.plugins.crmclient.util.http.HttpMethodEnum;
 import fr.paris.lutece.plugins.crmclient.util.http.IWebServiceCaller;
 import fr.paris.lutece.util.url.UrlItem;
+
+import org.springframework.beans.factory.InitializingBean;
+
+import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 
 /**
@@ -89,12 +90,13 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
         // List elements to include to the signature
         List<String> listElements = buildListElements( crmItem );
         UrlItem url = new UrlItem( crmItem.getUrlForWS(  ) );
+
         for ( Entry<String, String> parameter : crmItem.getParameters(  ).entrySet(  ) )
         {
-        	url.addParameter(parameter.getKey(  ), parameter.getValue(  ));
+            url.addParameter( parameter.getKey(  ), parameter.getValue(  ) );
         }
 
-        return _webServiceCaller.callWebService( url.getUrl(), crmItem.getParameters(  ),
+        return _webServiceCaller.callWebService( url.getUrl(  ), crmItem.getParameters(  ),
             _authenticatorService.getRequestAuthenticatorForWs( crmItem.getCRMWebAppCode(  ) ), listElements,
             HttpMethodEnum.GET );
     }
@@ -136,16 +138,14 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
     {
         List<String> listElements = new ArrayList<String>(  );
 
-        	
-       for(String signatureElement: _listSignatureElements)
-       {
-    	   if( crmItem.getParameters(  ).containsKey(signatureElement))
-    	   {
-    		   listElements.add( crmItem.getParameters(  ).get(signatureElement) );
-    	   }
-    	   
-       }
-        
-       	return listElements;
+        for ( String signatureElement : _listSignatureElements )
+        {
+            if ( crmItem.getParameters(  ).containsKey( signatureElement ) )
+            {
+                listElements.add( crmItem.getParameters(  ).get( signatureElement ) );
+            }
+        }
+
+        return listElements;
     }
 }
