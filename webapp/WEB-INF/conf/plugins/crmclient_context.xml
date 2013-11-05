@@ -19,6 +19,7 @@
 		<value>id_crm_user</value>
 		<value>user_guid</value>
 		<value>id_status_crm</value>
+		<value>crm_web_app_code</value>
 	</util:list>
 	
 	<!-- CRM Items -->
