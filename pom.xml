@@ -61,8 +61,8 @@
     </properties>
     
     <scm>
-        <connection>scm:git:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/applications/plugin-crmclient</connection>
-        <developerConnection>scm:git:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/applications/plugin-crmclient</developerConnection>
-        <url>http://dev.lutece.paris.fr/viewvc/lutece/portal/trunk/plugins/applications/plugin-crmclient</url>
+        <connection>scm:git:https://github.com/lutece-platform/lutece-crm-plugin-crmclient.git</connection>
+        <developerConnection>scm:git:https://github.com/lutece-platform/lutece-crm-plugin-crmclient.git</developerConnection>
+        <url>https://github.com/lutece-platform/lutece-crm-plugin-crmclient.git</url>
     </scm>
 </project>
