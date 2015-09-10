@@ -2,7 +2,7 @@
     <!-- Plugin Informations -->
     <name>crmclient</name>
     <class>fr.paris.lutece.plugins.crmclient.service.CRMClientPlugin</class>
-    <version>2.1.0</version>
+    <version>2.1.1-SNAPSHOT</version>
     <documentation/>
     <installation/>
     <changes/>
