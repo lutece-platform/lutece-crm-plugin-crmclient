@@ -31,21 +31,30 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.crmclient.business.demand;
+package fr.paris.lutece.plugins.crmclient.business.notification;
 
 import fr.paris.lutece.plugins.crmclient.business.CRMItem;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 
 /**
  *
- * DemandItem
+ * NotificationItem
  *
  */
-public abstract class DemandItem extends CRMItem
+public class NotificationItemV2 extends CRMItem
 {
-    private static final long serialVersionUID = 1781761996546052287L;
+    private static final long serialVersionUID = 8068092823469933679L;
 
     // PROPERTIES
-    protected static final String PROPERTY_WS_CRM_REST_DEMAND_BASE_URL = "crmclient.crm.rest.demand.base_url";
-    
+    private static final String PROPERTY_WS_CRM_DEMAND_NOTIFY_URL = "crmclient.crm.rest.demand.notify_v2.url";
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getUrlForWS(  )
+    {
+        return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );
+    }
 }

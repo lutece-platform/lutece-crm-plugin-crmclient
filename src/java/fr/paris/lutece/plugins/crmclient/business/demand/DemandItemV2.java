@@ -41,11 +41,11 @@ import fr.paris.lutece.plugins.crmclient.business.CRMItem;
  * DemandItem
  *
  */
-public abstract class DemandItem extends CRMItem
+public abstract class DemandItemV2 extends CRMItem
 {
     private static final long serialVersionUID = 1781761996546052287L;
 
     // PROPERTIES
-    protected static final String PROPERTY_WS_CRM_REST_DEMAND_BASE_URL = "crmclient.crm.rest.demand.base_url";
-    
+    protected static final String PROPERTY_WS_CRM_REST_DEMAND_BASE_URL = "crmclient.crm.rest.demand.base_url_v2";
+   
 }
