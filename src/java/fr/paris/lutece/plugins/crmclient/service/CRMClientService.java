@@ -526,7 +526,7 @@ public class CRMClientService implements ICRMClientService
             String strStatusText, String strData, String strCRMWebAppCode ) throws CRMException
     {
         
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_USER_GUID.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_USER_GUID_V2.toString(  ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
@@ -556,7 +556,7 @@ public class CRMClientService implements ICRMClientService
     @Override
     public void sendDeleteDemandV2(  String strRemoteId,String strIdDemandType, String strCRMWebAppCode) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DELETE.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DELETE_V2.toString(  ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
@@ -577,7 +577,7 @@ public class CRMClientService implements ICRMClientService
     public void sendUpdateDemandV2( String strRemoteId,String strIdDemandType, String strStatusText, String strCRMWebAppCode, String strIdStatusCRM,
             String strData  ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_UPDATE.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_UPDATE_V2.toString(  ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
