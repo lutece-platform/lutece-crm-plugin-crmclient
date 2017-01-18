@@ -10,7 +10,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>plugin-crmclient</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>2.1.1</version>
     <name>Lutece crm client plugin</name>
     
     <repositories>
@@ -64,6 +64,6 @@
         <connection>scm:git:https://github.com/lutece-secteur-public/gru-plugin-crmclient.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-plugin-crmclient.git</developerConnection>
         <url>https://github.com/lutece-secteur-public/gru-plugin-crmclient.git</url>
-      <tag>HEAD</tag>
+      <tag>gru-plugin-crmclient-2.1.1</tag>
   </scm>
 </project>
