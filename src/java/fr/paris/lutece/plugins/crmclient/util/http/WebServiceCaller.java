@@ -128,8 +128,7 @@ public class WebServiceCaller implements IWebServiceCaller
         {
             RequestHashAuthenticator auth = (RequestHashAuthenticator) authenticator;
             String strTimestamp = "" + new Date(  ).getTime(  );
-            String strSecret = "";
-            String strSignature = auth.buildSignature( listElements, strTimestamp, strSecret );
+            String strSignature = auth.buildSignature( listElements, strTimestamp );
             sbTrace.append( "\n Request Authenticator : RequestHashAuthenticator" );
             sbTrace.append( "\n Timestamp sample : " ).append( strTimestamp );
             sbTrace.append( "\n Signature for this timestamp : " ).append( strSignature );
@@ -138,8 +137,7 @@ public class WebServiceCaller implements IWebServiceCaller
         {
             HeaderHashAuthenticator auth = (HeaderHashAuthenticator) authenticator;
             String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
-            String strSecret = "";
-            String strSignature = auth.buildSignature( listElements, strTimestamp, strSecret );
+            String strSignature = auth.buildSignature( listElements, strTimestamp );
             sbTrace.append( "\n Request Authenticator : HeaderHashAuthenticator" );
             sbTrace.append( "\n Timestamp sample : " ).append( strTimestamp );
             sbTrace.append( "\n Signature for this timestamp : " ).append( strSignature );
