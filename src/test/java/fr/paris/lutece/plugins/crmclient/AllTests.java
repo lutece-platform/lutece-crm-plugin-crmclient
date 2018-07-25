@@ -39,7 +39,6 @@ import fr.paris.lutece.plugins.crmclient.service.CRMClientWebServiceTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-
 /**
  *
  * AllTests
@@ -48,10 +47,11 @@ import junit.framework.TestSuite;
 public class AllTests
 {
     /**
-    * A set of tests
-    * @return Test the tests
-    */
-    public static Test suite(  )
+     * A set of tests
+     * 
+     * @return Test the tests
+     */
+    public static Test suite( )
     {
         TestSuite suite = new TestSuite( "*** Tests Plugin CRMClient " );
 

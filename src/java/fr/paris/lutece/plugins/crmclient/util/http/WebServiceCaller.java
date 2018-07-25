@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 /**
  *
  * WebServiceCaller
@@ -61,20 +60,19 @@ public class WebServiceCaller implements IWebServiceCaller
      * {@inheritDoc}
      */
     @Override
-    public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
-        List<String> listElements, HttpMethodEnum httpMethod )
-        throws CRMException
+    public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator, List<String> listElements,
+            HttpMethodEnum httpMethod ) throws CRMException
     {
         String strResponse = StringUtils.EMPTY;
 
-        if ( AppLogService.isDebugEnabled(  ) )
+        if ( AppLogService.isDebugEnabled( ) )
         {
             AppLogService.debug( trace( strUrl, mapParameters, authenticator, listElements ) );
         }
 
         try
         {
-            HttpAccess httpAccess = new HttpAccess(  );
+            HttpAccess httpAccess = new HttpAccess( );
 
             if ( httpMethod == HttpMethodEnum.POST )
             {
@@ -85,10 +83,10 @@ public class WebServiceCaller implements IWebServiceCaller
                 strResponse = httpAccess.doGet( strUrl, authenticator, listElements );
             }
         }
-        catch ( HttpAccessException e )
+        catch( HttpAccessException e )
         {
             String strError = "Error connecting to '" + strUrl + "' : ";
-            AppLogService.error( strError + e.getMessage(  ), e );
+            AppLogService.error( strError + e.getMessage( ), e );
             throw new CRMException( strError, e );
         }
 
@@ -97,23 +95,27 @@ public class WebServiceCaller implements IWebServiceCaller
 
     /**
      * Trace the web service call
-     * @param strUrl The WS URI
-     * @param mapParameters The parameters
-     * @param authenticator The Request Authenticator
-     * @param listElements The list of elements to use to build the signature
+     * 
+     * @param strUrl
+     *            The WS URI
+     * @param mapParameters
+     *            The parameters
+     * @param authenticator
+     *            The Request Authenticator
+     * @param listElements
+     *            The list of elements to use to build the signature
      * @return The trace
      */
-    protected String trace( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
-        List<String> listElements )
+    protected String trace( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator, List<String> listElements )
     {
-        StringBuilder sbTrace = new StringBuilder(  );
+        StringBuilder sbTrace = new StringBuilder( );
         sbTrace.append( "\n ---------------------- CRM Client WebService Call -------------------" );
         sbTrace.append( "\nWebService URL : " ).append( strUrl );
         sbTrace.append( "\nParameters : " );
 
-        for ( Entry<String, String> parameter : mapParameters.entrySet(  ) )
+        for ( Entry<String, String> parameter : mapParameters.entrySet( ) )
         {
-            sbTrace.append( "\n   " ).append( parameter.getKey(  ) ).append( ":" ).append( parameter.getValue(  ) );
+            sbTrace.append( "\n   " ).append( parameter.getKey( ) ).append( ":" ).append( parameter.getValue( ) );
         }
 
         sbTrace.append( "\nSecurity : " );
@@ -127,32 +129,34 @@ public class WebServiceCaller implements IWebServiceCaller
         if ( authenticator instanceof RequestHashAuthenticator )
         {
             RequestHashAuthenticator auth = (RequestHashAuthenticator) authenticator;
-            String strTimestamp = "" + new Date(  ).getTime(  );
+            String strTimestamp = "" + new Date( ).getTime( );
             String strSignature = auth.buildSignature( listElements, strTimestamp );
             sbTrace.append( "\n Request Authenticator : RequestHashAuthenticator" );
             sbTrace.append( "\n Timestamp sample : " ).append( strTimestamp );
             sbTrace.append( "\n Signature for this timestamp : " ).append( strSignature );
         }
-        else if ( authenticator instanceof HeaderHashAuthenticator )
-        {
-            HeaderHashAuthenticator auth = (HeaderHashAuthenticator) authenticator;
-            String strTimestamp = Long.toString( new Date(  ).getTime(  ) );
-            String strSignature = auth.buildSignature( listElements, strTimestamp );
-            sbTrace.append( "\n Request Authenticator : HeaderHashAuthenticator" );
-            sbTrace.append( "\n Timestamp sample : " ).append( strTimestamp );
-            sbTrace.append( "\n Signature for this timestamp : " ).append( strSignature );
-        }
-        else if ( authenticator instanceof NoSecurityAuthenticator )
-        {
-            sbTrace.append( "\n No request authentification" );
-        }
         else
-        {
-            sbTrace.append( "\n Unknown Request authenticator" );
-        }
+            if ( authenticator instanceof HeaderHashAuthenticator )
+            {
+                HeaderHashAuthenticator auth = (HeaderHashAuthenticator) authenticator;
+                String strTimestamp = Long.toString( new Date( ).getTime( ) );
+                String strSignature = auth.buildSignature( listElements, strTimestamp );
+                sbTrace.append( "\n Request Authenticator : HeaderHashAuthenticator" );
+                sbTrace.append( "\n Timestamp sample : " ).append( strTimestamp );
+                sbTrace.append( "\n Signature for this timestamp : " ).append( strSignature );
+            }
+            else
+                if ( authenticator instanceof NoSecurityAuthenticator )
+                {
+                    sbTrace.append( "\n No request authentification" );
+                }
+                else
+                {
+                    sbTrace.append( "\n Unknown Request authenticator" );
+                }
 
         sbTrace.append( "\n --------------------------------------------------------------------" );
 
-        return sbTrace.toString(  );
+        return sbTrace.toString( );
     }
 }

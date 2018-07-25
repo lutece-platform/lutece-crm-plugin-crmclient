@@ -49,9 +49,9 @@ public class DemandItemDemandTypes extends CRMItem
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS() 
+    public String getUrlForWS( )
     {
-        return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_DEMAND_TYPES_URL );
+        return getCRMWebAppBaseURL( ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_DEMAND_TYPES_URL );
     }
-   
+
 }

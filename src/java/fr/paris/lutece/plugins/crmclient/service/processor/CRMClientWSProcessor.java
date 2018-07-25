@@ -51,7 +51,6 @@ import java.util.Map.Entry;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-
 /**
  *
  * CRMClientWSProcessor
@@ -76,9 +75,8 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
         // List elements to include to the signature
         List<String> listElements = buildListElements( crmItem );
 
-        return _webServiceCaller.callWebService( crmItem.getUrlForWS(  ), crmItem.getParameters(  ),
-            _authenticatorService.getRequestAuthenticatorForWs( crmItem.getCRMWebAppCode(  ) ), listElements,
-            HttpMethodEnum.POST );
+        return _webServiceCaller.callWebService( crmItem.getUrlForWS( ), crmItem.getParameters( ),
+                _authenticatorService.getRequestAuthenticatorForWs( crmItem.getCRMWebAppCode( ) ), listElements, HttpMethodEnum.POST );
     }
 
     /**
@@ -89,23 +87,22 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
     {
         // List elements to include to the signature
         List<String> listElements = buildListElements( crmItem );
-        UrlItem url = new UrlItem( crmItem.getUrlForWS(  ) );
+        UrlItem url = new UrlItem( crmItem.getUrlForWS( ) );
 
-        for ( Entry<String, String> parameter : crmItem.getParameters(  ).entrySet(  ) )
+        for ( Entry<String, String> parameter : crmItem.getParameters( ).entrySet( ) )
         {
-            url.addParameter( parameter.getKey(  ), parameter.getValue(  ) );
+            url.addParameter( parameter.getKey( ), parameter.getValue( ) );
         }
 
-        return _webServiceCaller.callWebService( url.getUrl(  ), crmItem.getParameters(  ),
-            _authenticatorService.getRequestAuthenticatorForWs( crmItem.getCRMWebAppCode(  ) ), listElements,
-            HttpMethodEnum.GET );
+        return _webServiceCaller.callWebService( url.getUrl( ), crmItem.getParameters( ),
+                _authenticatorService.getRequestAuthenticatorForWs( crmItem.getCRMWebAppCode( ) ), listElements, HttpMethodEnum.GET );
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void afterPropertiesSet(  ) throws Exception
+    public void afterPropertiesSet( ) throws Exception
     {
         Assert.notNull( _webServiceCaller, "The WebService Caller must be set." );
         Assert.notNull( _listSignatureElements, "The list of signature elements must be set." );
@@ -113,7 +110,9 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
 
     /**
      * Set the signature elements
-     * @param listSignatureElements the signature elements
+     * 
+     * @param listSignatureElements
+     *            the signature elements
      */
     public void setSignatureElements( List<String> listSignatureElements )
     {
@@ -122,7 +121,9 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
 
     /**
      * Set the web service caller
-     * @param webServiceCaller the web service caller
+     * 
+     * @param webServiceCaller
+     *            the web service caller
      */
     public void setWebServiceCaller( IWebServiceCaller webServiceCaller )
     {
@@ -131,18 +132,20 @@ public class CRMClientWSProcessor implements ICRMClientProcessor, InitializingBe
 
     /**
      * Build the list of elements to put on the request authenticator
-     * @param crmItem the crm item
+     * 
+     * @param crmItem
+     *            the crm item
      * @return the list of elements
      */
     private List<String> buildListElements( ICRMItem crmItem )
     {
-        List<String> listElements = new ArrayList<String>(  );
+        List<String> listElements = new ArrayList<String>( );
 
         for ( String signatureElement : _listSignatureElements )
         {
-            if ( crmItem.getParameters(  ).containsKey( signatureElement ) )
+            if ( crmItem.getParameters( ).containsKey( signatureElement ) )
             {
-                listElements.add( crmItem.getParameters(  ).get( signatureElement ) );
+                listElements.add( crmItem.getParameters( ).get( signatureElement ) );
             }
         }
 

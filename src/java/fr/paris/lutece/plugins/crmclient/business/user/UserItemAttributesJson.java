@@ -35,12 +35,11 @@ package fr.paris.lutece.plugins.crmclient.business.user;
 
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
-
 /**
-*
-* UserItemAttributesJson
-*
-*/
+ *
+ * UserItemAttributesJson
+ *
+ */
 public class UserItemAttributesJson extends UserItem
 {
     private static final long serialVersionUID = 1781761996546052287L;
@@ -49,14 +48,14 @@ public class UserItemAttributesJson extends UserItem
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS(  )
+    public String getUrlForWS( )
     {
-        String strUserGuid = this.getParameters(  ).get( USER_GUID );
-        StringBuffer strUrlForWS = new StringBuffer(  );
-        strUrlForWS.append( getCRMWebAppBaseURL(  ) );
+        String strUserGuid = this.getParameters( ).get( USER_GUID );
+        StringBuffer strUrlForWS = new StringBuffer( );
+        strUrlForWS.append( getCRMWebAppBaseURL( ) );
         strUrlForWS.append( AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_USER_BASE_URL ) );
         strUrlForWS.append( strUserGuid );
 
-        return strUrlForWS.toString(  );
+        return strUrlForWS.toString( );
     }
 }

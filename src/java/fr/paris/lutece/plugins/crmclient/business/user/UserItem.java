@@ -35,12 +35,11 @@ package fr.paris.lutece.plugins.crmclient.business.user;
 
 import fr.paris.lutece.plugins.crmclient.business.CRMItem;
 
-
 /**
-*
-* UserItem
-*
-*/
+ *
+ * UserItem
+ *
+ */
 public abstract class UserItem extends CRMItem
 {
     private static final long serialVersionUID = 1781761996546052287L;

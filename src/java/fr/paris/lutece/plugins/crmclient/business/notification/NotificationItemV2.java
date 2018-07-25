@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.crmclient.business.notification;
 import fr.paris.lutece.plugins.crmclient.business.CRMItem;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
-
 /**
  *
  * NotificationItem
@@ -53,8 +52,8 @@ public class NotificationItemV2 extends CRMItem
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS(  )
+    public String getUrlForWS( )
     {
-        return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );
+        return getCRMWebAppBaseURL( ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_NOTIFY_URL );
     }
 }

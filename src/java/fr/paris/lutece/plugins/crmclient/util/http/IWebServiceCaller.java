@@ -39,7 +39,6 @@ import fr.paris.lutece.util.signrequest.RequestAuthenticator;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * WebServiceCaller Interface
@@ -49,15 +48,21 @@ public interface IWebServiceCaller
 {
     /**
      * This method calls Rest WS to do an action
-     * @param strUrl the url
-     * @param mapParameters the params to pass in the post
-     * @param authenticator The request authenticator
-     * @param listElements the list of elements to include in the signature
-     * @param httpMethod the http method used
+     * 
+     * @param strUrl
+     *            the url
+     * @param mapParameters
+     *            the params to pass in the post
+     * @param authenticator
+     *            The request authenticator
+     * @param listElements
+     *            the list of elements to include in the signature
+     * @param httpMethod
+     *            the http method used
      * @return the response as a string
-     * @throws CRMException the exception if there is a problem
+     * @throws CRMException
+     *             the exception if there is a problem
      */
-    String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
-        List<String> listElements, HttpMethodEnum httpMethod )
-        throws CRMException;
+    String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator, List<String> listElements,
+            HttpMethodEnum httpMethod ) throws CRMException;
 }

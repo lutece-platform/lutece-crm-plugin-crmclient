@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.crmclient.business.demand;
 
 import fr.paris.lutece.plugins.crmclient.business.CRMItem;
 
-
 /**
  *
  * DemandItem
@@ -47,5 +46,5 @@ public abstract class DemandItemV2 extends CRMItem
 
     // PROPERTIES
     protected static final String PROPERTY_WS_CRM_REST_DEMAND_BASE_URL = "crmclient.crm.rest.demand.base_url_v2";
-   
+
 }

@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.crmclient.business;
 
-
 /**
  *
  * MokeCRMItem
@@ -51,7 +50,7 @@ public class MokeCRMItem extends CRMItem
     /**
      * Constructor
      */
-    public MokeCRMItem(  )
+    public MokeCRMItem( )
     {
         putParameter( KEY1, VALUE1 );
         putParameter( KEY2, VALUE2 );
@@ -61,7 +60,7 @@ public class MokeCRMItem extends CRMItem
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS(  )
+    public String getUrlForWS( )
     {
         return URL_FOR_WS;
     }

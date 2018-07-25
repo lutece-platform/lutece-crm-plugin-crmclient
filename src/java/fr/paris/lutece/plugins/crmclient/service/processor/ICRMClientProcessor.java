@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.crmclient.service.processor;
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.plugins.crmclient.util.CRMException;
 
-
 /**
  *
  * CRMClientProcessor
@@ -47,16 +46,22 @@ public interface ICRMClientProcessor
     String BEAN_PROCESSOR = "crmclient.crmClientProcessor";
 
     /**
-    * Calls WS to notify/update a demand
-    * @param crmItem the crm item
-    * @throws CRMException exception if there are errors
-    */
+     * Calls WS to notify/update a demand
+     * 
+     * @param crmItem
+     *            the crm item
+     * @throws CRMException
+     *             exception if there are errors
+     */
     String doProcess( ICRMItem crmItem ) throws CRMException;
 
     /**
      * Calls WS to get information on demand or user
-     * @param crmItem the crm item
-     * @throws CRMException exception if there are errors
+     * 
+     * @param crmItem
+     *            the crm item
+     * @throws CRMException
+     *             exception if there are errors
      */
     String getProcess( ICRMItem crmItem ) throws CRMException;
 }

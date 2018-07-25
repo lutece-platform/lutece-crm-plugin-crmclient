@@ -40,7 +40,6 @@ import fr.paris.lutece.test.LuteceTestCase;
 
 import java.util.Map.Entry;
 
-
 /**
  *
  * CRMItemQueueTest
@@ -51,11 +50,11 @@ public class CRMItemQueueTest extends LuteceTestCase
     /**
      * Test business of class fr.paris.lutece.plugins.crmclient.business.CRMItemQueue
      */
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        CRMItemQueue queue = new CRMItemQueue(  );
-        queue.setCRMItem( new MokeCRMItem(  ) );
+        CRMItemQueue queue = new CRMItemQueue( );
+        queue.setCRMItem( new MokeCRMItem( ) );
 
         ICRMClientQueue clientQueue = SpringContextService.getBean( DatabaseQueue.BEAN_SERVICE );
         ICRMItemQueueDAO dao = SpringContextService.getBean( "crmclient.crmItemQueueDAO" );
@@ -63,21 +62,21 @@ public class CRMItemQueueTest extends LuteceTestCase
         // Test create
         dao.insert( queue );
 
-        CRMItemQueue queueStored = clientQueue.getNextCRMItemQueue(  );
-        assertEquals( queue.getIdCRMItemQueue(  ), queueStored.getIdCRMItemQueue(  ) );
+        CRMItemQueue queueStored = clientQueue.getNextCRMItemQueue( );
+        assertEquals( queue.getIdCRMItemQueue( ), queueStored.getIdCRMItemQueue( ) );
 
-        for ( Entry<String, String> parameter : queue.getCRMItem(  ).getParameters(  ).entrySet(  ) )
+        for ( Entry<String, String> parameter : queue.getCRMItem( ).getParameters( ).entrySet( ) )
         {
-            String strValueStored = queueStored.getCRMItem(  ).getParameters(  ).get( parameter.getKey(  ) );
-            assertEquals( parameter.getValue(  ), strValueStored );
+            String strValueStored = queueStored.getCRMItem( ).getParameters( ).get( parameter.getKey( ) );
+            assertEquals( parameter.getValue( ), strValueStored );
         }
 
         // Test finders
-        dao.getCountCRMItem(  );
+        dao.getCountCRMItem( );
 
         // Test delete
-        dao.delete( queue.getIdCRMItemQueue(  ) );
-        queueStored = clientQueue.getNextCRMItemQueue(  );
+        dao.delete( queue.getIdCRMItemQueue( ) );
+        queueStored = clientQueue.getNextCRMItemQueue( );
         assertNull( queueStored );
     }
 }

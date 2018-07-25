@@ -42,7 +42,6 @@ import fr.paris.lutece.test.LuteceTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * CRMClientWebServiceTest
@@ -56,25 +55,25 @@ public class CRMClientWebServiceTest extends LuteceTestCase
     /**
      * Test of doProcess method of fr.paris.lutece.plugins.crmclient.service.CRMClientWebService
      */
-    public void testDoProcess(  )
+    public void testDoProcess( )
     {
         System.out.println( "doProcess" );
 
-        CRMClientWSProcessor webService = new CRMClientWSProcessor(  );
-        webService.setWebServiceCaller( new MokeWebServiceCaller(  ) );
+        CRMClientWSProcessor webService = new CRMClientWSProcessor( );
+        webService.setWebServiceCaller( new MokeWebServiceCaller( ) );
 
-        List<String> listElements = new ArrayList<String>(  );
+        List<String> listElements = new ArrayList<String>( );
         listElements.add( KEY1 );
         listElements.add( KEY2 );
         webService.setSignatureElements( listElements );
 
         try
         {
-            webService.doProcess( new MokeCRMItem(  ) );
+            webService.doProcess( new MokeCRMItem( ) );
         }
-        catch ( CRMException e )
+        catch( CRMException e )
         {
-            fail(  );
+            fail( );
         }
     }
 }

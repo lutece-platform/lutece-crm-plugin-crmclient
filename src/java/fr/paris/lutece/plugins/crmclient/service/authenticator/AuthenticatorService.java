@@ -40,7 +40,6 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
 
-
 public class AuthenticatorService implements IAuthenticatorService
 {
     private static final String DEFAULT_AUTHENTICATOR_CODE = "default";
@@ -48,8 +47,8 @@ public class AuthenticatorService implements IAuthenticatorService
     private Map<String, AbstractAuthenticator> _mapRequestAuthenticatorForUrl;
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     public RequestAuthenticator getRequestAuthenticatorForWs( String strCrmWebbAppCode )
     {
@@ -58,9 +57,8 @@ public class AuthenticatorService implements IAuthenticatorService
             return _mapRequestAuthenticatorForWs.get( DEFAULT_AUTHENTICATOR_CODE );
         }
 
-        return _mapRequestAuthenticatorForWs.containsKey( strCrmWebbAppCode )
-        ? _mapRequestAuthenticatorForWs.get( strCrmWebbAppCode )
-        : _mapRequestAuthenticatorForWs.get( DEFAULT_AUTHENTICATOR_CODE );
+        return _mapRequestAuthenticatorForWs.containsKey( strCrmWebbAppCode ) ? _mapRequestAuthenticatorForWs.get( strCrmWebbAppCode )
+                : _mapRequestAuthenticatorForWs.get( DEFAULT_AUTHENTICATOR_CODE );
     }
 
     /**
@@ -74,14 +72,15 @@ public class AuthenticatorService implements IAuthenticatorService
             return _mapRequestAuthenticatorForUrl.get( DEFAULT_AUTHENTICATOR_CODE );
         }
 
-        return _mapRequestAuthenticatorForUrl.containsKey( strCrmWebbAppCode )
-        ? _mapRequestAuthenticatorForUrl.get( strCrmWebbAppCode )
-        : _mapRequestAuthenticatorForUrl.get( DEFAULT_AUTHENTICATOR_CODE );
+        return _mapRequestAuthenticatorForUrl.containsKey( strCrmWebbAppCode ) ? _mapRequestAuthenticatorForUrl.get( strCrmWebbAppCode )
+                : _mapRequestAuthenticatorForUrl.get( DEFAULT_AUTHENTICATOR_CODE );
     }
 
     /**
      * setMapRequestAuthenticatorWs
-     * @param mapRequestAuthenticator mapRequestAuthenticator
+     * 
+     * @param mapRequestAuthenticator
+     *            mapRequestAuthenticator
      */
     public void setMapRequestAuthenticatorForWs( Map<String, RequestAuthenticator> mapRequestAuthenticator )
     {
@@ -89,9 +88,11 @@ public class AuthenticatorService implements IAuthenticatorService
     }
 
     /**
-         * setMapRequestAuthenticatorUrl
-         * @param mapRequestAuthenticatorForUrl mapRequestAuthenticatorForUrl
-         */
+     * setMapRequestAuthenticatorUrl
+     * 
+     * @param mapRequestAuthenticatorForUrl
+     *            mapRequestAuthenticatorForUrl
+     */
     public void setMapRequestAuthenticatorForUrl( Map<String, AbstractAuthenticator> mapRequestAuthenticatorForUrl )
     {
         this._mapRequestAuthenticatorForUrl = mapRequestAuthenticatorForUrl;

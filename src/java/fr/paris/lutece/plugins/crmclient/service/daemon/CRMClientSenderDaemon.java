@@ -43,7 +43,6 @@ import fr.paris.lutece.portal.service.util.AppLogService;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  *
  * CRMClientSenderDaemon
@@ -54,23 +53,23 @@ public class CRMClientSenderDaemon extends Daemon
     /**
      * Implements Runable interface
      */
-    public synchronized void run(  )
+    public synchronized void run( )
     {
-        StringBuilder sbLog = new StringBuilder(  );
+        StringBuilder sbLog = new StringBuilder( );
         ICRMClientProcessor crmClientService = SpringContextService.getBean( ICRMClientProcessor.BEAN_PROCESSOR );
         ICRMClientQueue queue = SpringContextService.getBean( ICRMClientQueue.BEAN_SERVICE );
 
-        if ( ( queue != null ) && ( queue.size(  ) > 0 ) )
+        if ( ( queue != null ) && ( queue.size( ) > 0 ) )
         {
             ICRMItem crmItem = null;
 
             do
             {
-                crmItem = queue.consume(  );
+                crmItem = queue.consume( );
 
                 if ( crmItem != null )
                 {
-                    sbLog.append( "\n- Sending " + crmItem.getClass(  ).getName(  ) + "..." );
+                    sbLog.append( "\n- Sending " + crmItem.getClass( ).getName( ) + "..." );
 
                     boolean bIsSent = true;
 
@@ -78,14 +77,14 @@ public class CRMClientSenderDaemon extends Daemon
                     {
                         crmClientService.doProcess( crmItem );
                     }
-                    catch ( CRMException e )
+                    catch( CRMException e )
                     {
-                        AppLogService.error( e.getMessage(  ), e );
+                        AppLogService.error( e.getMessage( ), e );
                         // Put the item back to the file
                         queue.send( crmItem );
                         bIsSent = false;
                         sbLog.append( "NOK" );
-                        sbLog.append( "\n\t" + e.getMessage(  ) );
+                        sbLog.append( "\n\t" + e.getMessage( ) );
 
                         break;
                     }
@@ -99,11 +98,11 @@ public class CRMClientSenderDaemon extends Daemon
             while ( crmItem != null );
         }
 
-        if ( StringUtils.isBlank( sbLog.toString(  ) ) )
+        if ( StringUtils.isBlank( sbLog.toString( ) ) )
         {
             sbLog.append( "\nNothing to send." );
         }
 
-        setLastRunLogs( sbLog.toString(  ) );
+        setLastRunLogs( sbLog.toString( ) );
     }
 }

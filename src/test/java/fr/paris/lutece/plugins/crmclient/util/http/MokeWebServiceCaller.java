@@ -39,7 +39,6 @@ import fr.paris.lutece.util.signrequest.RequestAuthenticator;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * MokeWebServiceCaller
@@ -53,9 +52,8 @@ public class MokeWebServiceCaller extends WebServiceCaller
      * {@inheritDoc}
      */
     @Override
-    public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator,
-        List<String> listElements, HttpMethodEnum httpMethod )
-        throws CRMException
+    public String callWebService( String strUrl, Map<String, String> mapParameters, RequestAuthenticator authenticator, List<String> listElements,
+            HttpMethodEnum httpMethod ) throws CRMException
     {
         String strTrace = trace( strUrl, mapParameters, authenticator, listElements );
         System.out.println( strTrace );

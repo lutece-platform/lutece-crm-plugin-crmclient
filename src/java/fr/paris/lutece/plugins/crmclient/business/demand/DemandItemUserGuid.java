@@ -35,12 +35,11 @@ package fr.paris.lutece.plugins.crmclient.business.demand;
 
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
-
 /**
-*
-* DemandItemUserGuid
-*
-*/
+ *
+ * DemandItemUserGuid
+ *
+ */
 public class DemandItemUserGuid extends DemandItem
 {
     private static final long serialVersionUID = 1781761996546052287L;
@@ -50,16 +49,16 @@ public class DemandItemUserGuid extends DemandItem
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS(  )
+    public String getUrlForWS( )
     {
-        String strIdDemand = this.getParameters(  ).get( ID_DEMAND );
-        StringBuffer strUrlForWS = new StringBuffer(  );
-        strUrlForWS.append( getCRMWebAppBaseURL(  ) );
+        String strIdDemand = this.getParameters( ).get( ID_DEMAND );
+        StringBuffer strUrlForWS = new StringBuffer( );
+        strUrlForWS.append( getCRMWebAppBaseURL( ) );
         strUrlForWS.append( AppPropertiesService.getProperty( PROPERTY_WS_CRM_REST_DEMAND_BASE_URL ) );
         strUrlForWS.append( strIdDemand );
         strUrlForWS.append( "/" );
         strUrlForWS.append( AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_USER_GUID ) );
 
-        return strUrlForWS.toString(  );
+        return strUrlForWS.toString( );
     }
 }

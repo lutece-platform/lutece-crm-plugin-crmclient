@@ -42,7 +42,6 @@ import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.CannotLoadBeanClassException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-
 /**
  *
  * CRMItemFactory
@@ -69,20 +68,17 @@ public class CRMItemFactory implements ICRMItemFactory
 
             return crmItem;
         }
-        catch ( BeanDefinitionStoreException e )
+        catch( BeanDefinitionStoreException e )
         {
-            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName(  ) + "' - CAUSE : " +
-                e.getMessage(  ), e );
+            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName( ) + "' - CAUSE : " + e.getMessage( ), e );
         }
-        catch ( NoSuchBeanDefinitionException e )
+        catch( NoSuchBeanDefinitionException e )
         {
-            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName(  ) + "' - CAUSE : " +
-                e.getMessage(  ), e );
+            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName( ) + "' - CAUSE : " + e.getMessage( ), e );
         }
-        catch ( CannotLoadBeanClassException e )
+        catch( CannotLoadBeanClassException e )
         {
-            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName(  ) + "' - CAUSE : " +
-                e.getMessage(  ), e );
+            AppLogService.error( "CRMItemFactory ERROR : could not load bean '" + e.getBeanName( ) + "' - CAUSE : " + e.getMessage( ), e );
         }
 
         return null;

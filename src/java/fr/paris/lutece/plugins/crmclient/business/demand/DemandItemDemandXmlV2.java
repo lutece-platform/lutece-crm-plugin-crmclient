@@ -36,12 +36,11 @@ package fr.paris.lutece.plugins.crmclient.business.demand;
 import fr.paris.lutece.plugins.crmclient.business.ICRMItem;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
-
 /**
-*
-* DemandItemDemandXml
-*
-*/
+ *
+ * DemandItemDemandXml
+ *
+ */
 public class DemandItemDemandXmlV2 extends DemandItemV2
 {
     private static final long serialVersionUID = 1781761996546052287L;
@@ -51,11 +50,11 @@ public class DemandItemDemandXmlV2 extends DemandItemV2
      * {@inheritDoc}
      */
     @Override
-    public String getUrlForWS(  )
+    public String getUrlForWS( )
     {
-        String strRemoteId=  this.getParameters( ).containsKey( ICRMItem.REMOTE_ID )?this.getParameters( ).get( ICRMItem.REMOTE_ID ):"";
-        String strIdDemandType = this.getParameters( ).containsKey( ICRMItem.ID_DEMAND_TYPE)?this.getParameters( ).get( ICRMItem.ID_DEMAND_TYPE ):"";
-        return getCRMWebAppBaseURL(  ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_XML ) +"/"+strIdDemandType+"/"+strRemoteId;
-      
+        String strRemoteId = this.getParameters( ).containsKey( ICRMItem.REMOTE_ID ) ? this.getParameters( ).get( ICRMItem.REMOTE_ID ) : "";
+        String strIdDemandType = this.getParameters( ).containsKey( ICRMItem.ID_DEMAND_TYPE ) ? this.getParameters( ).get( ICRMItem.ID_DEMAND_TYPE ) : "";
+        return getCRMWebAppBaseURL( ) + AppPropertiesService.getProperty( PROPERTY_WS_CRM_DEMAND_XML ) + "/" + strIdDemandType + "/" + strRemoteId;
+
     }
 }

@@ -44,7 +44,6 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 
-
 /**
  *
  * AbstractCRMClientService
@@ -66,14 +65,14 @@ public class CRMClientService implements ICRMClientService
      * {@inheritDoc}
      */
     @Override
-    public ICRMClientQueue getQueue(  )
+    public ICRMClientQueue getQueue( )
     {
         return _crmClientQueue;
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     public void notify( String strIdDemand, String strObject, String strMessage, String strSender )
     {
@@ -84,24 +83,19 @@ public class CRMClientService implements ICRMClientService
      * {@inheritDoc}
      */
     @Override
-    public void notify( String strIdDemand, String strObject, String strMessage, String strSender,
-        String strCRMWebAppCode )
+    public void notify( String strIdDemand, String strObject, String strMessage, String strSender, String strCRMWebAppCode )
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.NOTIFICATION.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.NOTIFICATION.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND,
-            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.NOTIFICATION_OBJECT,
-            StringUtils.isNotBlank( strObject ) ? strObject : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.NOTIFICATION_MESSAGE,
-            StringUtils.isNotBlank( strMessage ) ? strMessage : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.NOTIFICATION_SENDER,
-            StringUtils.isNotBlank( strSender ) ? strSender : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND, StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.NOTIFICATION_OBJECT, StringUtils.isNotBlank( strObject ) ? strObject : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.NOTIFICATION_MESSAGE, StringUtils.isNotBlank( strMessage ) ? strMessage : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.NOTIFICATION_SENDER, StringUtils.isNotBlank( strSender ) ? strSender : StringUtils.EMPTY );
 
         _crmClientQueue.send( crmItem );
     }
@@ -110,22 +104,16 @@ public class CRMClientService implements ICRMClientService
      * {@inheritDoc}
      */
     @Override
-    public void sendUpdateDemand( String strIdDemand, String strStatusText )
-        throws CRMException
+    public void sendUpdateDemand( String strIdDemand, String strStatusText ) throws CRMException
     {
         sendUpdateDemand( strIdDemand, strStatusText, StringUtils.EMPTY );
     }
 
     /**
-    
-    
-    
-    /**
-     * {@inheritDoc}
+     * /** {@inheritDoc}
      */
     @Override
-    public void sendUpdateDemand( String strIdDemand, String strStatusText, String strCRMWebAppCode )
-        throws CRMException
+    public void sendUpdateDemand( String strIdDemand, String strStatusText, String strCRMWebAppCode ) throws CRMException
     {
         sendUpdateDemand( strIdDemand, strStatusText, strCRMWebAppCode, StringUtils.EMPTY, StringUtils.EMPTY );
     }
@@ -134,8 +122,7 @@ public class CRMClientService implements ICRMClientService
      * {@inheritDoc}
      */
     @Override
-    public void sendUpdateDemand( String strIdDemand, String strStatusText, String strCRMWebAppCode,
-        String strIdStatusCRM ) throws CRMException
+    public void sendUpdateDemand( String strIdDemand, String strStatusText, String strCRMWebAppCode, String strIdStatusCRM ) throws CRMException
     {
         sendUpdateDemand( strIdDemand, strStatusText, strCRMWebAppCode, strIdStatusCRM, StringUtils.EMPTY );
     }
@@ -144,10 +131,10 @@ public class CRMClientService implements ICRMClientService
      * {@inheritDoc}
      */
     @Override
-    public void sendUpdateDemand( String strIdDemand, String strStatusText, String strCRMWebAppCode,
-        String strIdStatusCRM, String strData ) throws CRMException
+    public void sendUpdateDemand( String strIdDemand, String strStatusText, String strCRMWebAppCode, String strIdStatusCRM, String strData )
+            throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_UPDATE.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_UPDATE.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
@@ -164,47 +151,38 @@ public class CRMClientService implements ICRMClientService
             crmItem.putParameter( ICRMItem.DEMAND_DATA, strData );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND,
-            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.STATUS_TEXT,
-            StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND, StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.STATUS_TEXT, StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
         _crmClientProcessor.doProcess( crmItem );
     }
 
     @Override
-    public String sendCreateDemandByUserGuid( String strIdDemandType, String strUserGuid, String strIdStatusCRM,
-        String strStatusText, String strData ) throws CRMException
+    public String sendCreateDemandByUserGuid( String strIdDemandType, String strUserGuid, String strIdStatusCRM, String strStatusText, String strData )
+            throws CRMException
     {
-        return sendCreateDemandByUserGuid( strIdDemandType, strUserGuid, strIdStatusCRM, strStatusText, strData,
-            StringUtils.EMPTY );
+        return sendCreateDemandByUserGuid( strIdDemandType, strUserGuid, strIdStatusCRM, strStatusText, strData, StringUtils.EMPTY );
     }
 
     @Override
-    public String sendCreateDemandByUserGuid( String strIdDemandType, String strUserGuid, String strIdStatusCRM,
-        String strStatusText, String strData, String strCRMWebAppCode )
-        throws CRMException
+    public String sendCreateDemandByUserGuid( String strIdDemandType, String strUserGuid, String strIdStatusCRM, String strStatusText, String strData,
+            String strCRMWebAppCode ) throws CRMException
     {
-     
-        
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_USER_GUID.toString(  ) );
+
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_USER_GUID.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-            StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.USER_GUID,
-            StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.USER_GUID, StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.ID_STATUS_CRM,
-            StringUtils.isNotBlank( strIdStatusCRM ) ? strIdStatusCRM : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_STATUS_CRM, StringUtils.isNotBlank( strIdStatusCRM ) ? strIdStatusCRM : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.STATUS_TEXT,
-            StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.STATUS_TEXT, StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
         crmItem.putParameter( ICRMItem.DEMAND_DATA, StringUtils.isNotBlank( strData ) ? strData : StringUtils.EMPTY );
 
@@ -213,37 +191,31 @@ public class CRMClientService implements ICRMClientService
 
     @Override
     @Deprecated
-    public String sendCreateDemandByIdCRMUser( String strIdDemandType, String strIdCRMUser, String strIdStatusCRM,
-        String strStatusText, String strData ) throws CRMException
+    public String sendCreateDemandByIdCRMUser( String strIdDemandType, String strIdCRMUser, String strIdStatusCRM, String strStatusText, String strData )
+            throws CRMException
     {
-        return sendCreateDemandByIdCRMUser( strIdDemandType, strIdCRMUser, strIdStatusCRM, strStatusText, strData,
-            StringUtils.EMPTY );
+        return sendCreateDemandByIdCRMUser( strIdDemandType, strIdCRMUser, strIdStatusCRM, strStatusText, strData, StringUtils.EMPTY );
     }
 
     @Override
     @Deprecated
-    public String sendCreateDemandByIdCRMUser( String strIdDemandType, String strIdCRMUser, String strIdStatusCRM,
-        String strStatusText, String strData, String strCRMWebAppCode )
-        throws CRMException
+    public String sendCreateDemandByIdCRMUser( String strIdDemandType, String strIdCRMUser, String strIdStatusCRM, String strStatusText, String strData,
+            String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_ID_CRM_USER.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_ID_CRM_USER.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-            StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.ID_CRM_USER,
-            StringUtils.isNotBlank( strIdCRMUser ) ? strIdCRMUser : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_CRM_USER, StringUtils.isNotBlank( strIdCRMUser ) ? strIdCRMUser : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.ID_STATUS_CRM,
-            StringUtils.isNotBlank( strIdStatusCRM ) ? strIdStatusCRM : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_STATUS_CRM, StringUtils.isNotBlank( strIdStatusCRM ) ? strIdStatusCRM : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.STATUS_TEXT,
-            StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.STATUS_TEXT, StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
         crmItem.putParameter( ICRMItem.DEMAND_DATA, StringUtils.isNotBlank( strData ) ? strData : StringUtils.EMPTY );
 
@@ -251,49 +223,43 @@ public class CRMClientService implements ICRMClientService
     }
 
     @Override
-    public void sendDeleteDemand( String strIdDemand )
-        throws CRMException
+    public void sendDeleteDemand( String strIdDemand ) throws CRMException
     {
         sendDeleteDemand( strIdDemand, StringUtils.EMPTY );
     }
 
     @Override
-    public void sendDeleteDemand( String strIdDemand, String strCRMWebAppCode )
-        throws CRMException
+    public void sendDeleteDemand( String strIdDemand, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DELETE.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DELETE.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND,
-            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND, StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
 
         _crmClientProcessor.doProcess( crmItem );
     }
 
     @Override
-    public String getUserGuidFromIdDemand( String strIdDemand )
-        throws CRMException
+    public String getUserGuidFromIdDemand( String strIdDemand ) throws CRMException
     {
         return getUserGuidFromIdDemand( strIdDemand, StringUtils.EMPTY );
     }
 
     @Override
-    public String getUserGuidFromIdDemand( String strIdDemand, String strCRMWebAppCode )
-        throws CRMException
+    public String getUserGuidFromIdDemand( String strIdDemand, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_USER_GUID.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_USER_GUID.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND,
-            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND, StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
 
         return _crmClientProcessor.getProcess( crmItem );
     }
@@ -305,18 +271,16 @@ public class CRMClientService implements ICRMClientService
     }
 
     @Override
-    public String getDemandXml( String strIdDemand, String strCRMWebAppCode )
-        throws CRMException
+    public String getDemandXml( String strIdDemand, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_XML.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_XML.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND,
-            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND, StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
         crmItem.putParameter( ICRMItem.MEDIA_TYPE, MEDIA_TYPE_JSON );
 
         return _crmClientProcessor.getProcess( crmItem );
@@ -329,18 +293,16 @@ public class CRMClientService implements ICRMClientService
     }
 
     @Override
-    public String getDemandJson( String strIdDemand, String strCRMWebAppCode )
-        throws CRMException
+    public String getDemandJson( String strIdDemand, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_JSON.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_JSON.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_DEMAND,
-            StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND, StringUtils.isNotBlank( strIdDemand ) ? strIdDemand : StringUtils.EMPTY );
         crmItem.putParameter( ICRMItem.MEDIA_TYPE, MEDIA_TYPE_JSON );
 
         return _crmClientProcessor.getProcess( crmItem );
@@ -348,8 +310,7 @@ public class CRMClientService implements ICRMClientService
 
     @Override
     @Deprecated
-    public String getUserGuidFromIdCRMUser( String strIdCRMUser )
-        throws CRMException
+    public String getUserGuidFromIdCRMUser( String strIdCRMUser ) throws CRMException
     {
         // TODO Auto-generated method stub
         return getUserGuidFromIdCRMUser( strIdCRMUser, StringUtils.EMPTY );
@@ -357,70 +318,61 @@ public class CRMClientService implements ICRMClientService
 
     @Override
     @Deprecated
-    public String getUserGuidFromIdCRMUser( String strIdCRMUser, String strCRMWebAppCode )
-        throws CRMException
+    public String getUserGuidFromIdCRMUser( String strIdCRMUser, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_GUID.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_GUID.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.ID_CRM_USER,
-            StringUtils.isNotBlank( strIdCRMUser ) ? strIdCRMUser : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_CRM_USER, StringUtils.isNotBlank( strIdCRMUser ) ? strIdCRMUser : StringUtils.EMPTY );
 
         return _crmClientProcessor.getProcess( crmItem );
     }
 
     @Override
-    public String getCRMUserAttribute( String strUserGuid, String strAttribute )
-        throws CRMException
+    public String getCRMUserAttribute( String strUserGuid, String strAttribute ) throws CRMException
     {
         return getCRMUserAttribute( strUserGuid, strAttribute, StringUtils.EMPTY );
     }
 
     @Override
-    public String getCRMUserAttribute( String strUserGuid, String strAttribute, String strCRMWebAppCode )
-        throws CRMException
+    public String getCRMUserAttribute( String strUserGuid, String strAttribute, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_ATTRIBUTE.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_ATTRIBUTE.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.USER_GUID,
-            StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.USER_GUID, StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.USER_ATTRIBUTE,
-            StringUtils.isNotBlank( strAttribute ) ? strAttribute : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.USER_ATTRIBUTE, StringUtils.isNotBlank( strAttribute ) ? strAttribute : StringUtils.EMPTY );
 
         return _crmClientProcessor.getProcess( crmItem );
     }
 
     @Override
-    public String getCRMUserAttributesXml( String strUserGuid )
-        throws CRMException
+    public String getCRMUserAttributesXml( String strUserGuid ) throws CRMException
     {
         // TODO Auto-generated method stub
         return getCRMUserAttributesXml( strUserGuid, StringUtils.EMPTY );
     }
 
     @Override
-    public String getCRMUserAttributesXml( String strUserGuid, String strCRMWebAppCode )
-        throws CRMException
+    public String getCRMUserAttributesXml( String strUserGuid, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_ATTRIBUTES_XML.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_ATTRIBUTES_XML.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.USER_GUID,
-            StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.USER_GUID, StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
 
         crmItem.putParameter( ICRMItem.MEDIA_TYPE, MEDIA_TYPE_XML );
 
@@ -428,45 +380,40 @@ public class CRMClientService implements ICRMClientService
     }
 
     @Override
-    public String getCRMUserAttributesJson( String strUserGuid )
-        throws CRMException
+    public String getCRMUserAttributesJson( String strUserGuid ) throws CRMException
     {
         // TODO Auto-generated method stub
         return getCRMUserAttributesJson( strUserGuid, StringUtils.EMPTY );
     }
 
     @Override
-    public String getCRMUserAttributesJson( String strUserGuid, String strCRMWebAppCode )
-        throws CRMException
+    public String getCRMUserAttributesJson( String strUserGuid, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_ATTRIBUTES_JSON.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.USER_ATTRIBUTES_JSON.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.USER_GUID,
-            StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.USER_GUID, StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
         crmItem.putParameter( ICRMItem.MEDIA_TYPE, MEDIA_TYPE_JSON );
 
         return _crmClientProcessor.getProcess( crmItem );
     }
 
     @Override
-    public String getDemandJsonV2( String strRemoteId,String strIdDemandType, String strCRMWebAppCode ) throws CRMException
+    public String getDemandJsonV2( String strRemoteId, String strIdDemandType, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_JSON_V2.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_JSON_V2.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.REMOTE_ID,
-            StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-                StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.REMOTE_ID, StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
 
         crmItem.putParameter( ICRMItem.MEDIA_TYPE, MEDIA_TYPE_JSON );
 
@@ -474,79 +421,64 @@ public class CRMClientService implements ICRMClientService
     }
 
     @Override
-    public String getDemandXmlV2(  String strRemoteId,String strIdDemandType, String strCRMWebAppCode ) throws CRMException
+    public String getDemandXmlV2( String strRemoteId, String strIdDemandType, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_XML_V2.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DEMAND_XML_V2.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.REMOTE_ID,
-                StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
-            crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-                    StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.REMOTE_ID, StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
         crmItem.putParameter( ICRMItem.MEDIA_TYPE, MEDIA_TYPE_JSON );
 
         return _crmClientProcessor.getProcess( crmItem );
     }
 
     @Override
-    public void notifyV2( String strRemoteId, String strIdDemandType,String strObject, String strMessage, String strSender, String strCRMWebAppCode )
-    
+    public void notifyV2( String strRemoteId, String strIdDemandType, String strObject, String strMessage, String strSender, String strCRMWebAppCode )
+
     {
-        
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.NOTIFICATION_V2.toString(  ) );
+
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.NOTIFICATION_V2.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.REMOTE_ID,
-                StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
-            crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-                    StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.NOTIFICATION_OBJECT,
-            StringUtils.isNotBlank( strObject ) ? strObject : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.NOTIFICATION_MESSAGE,
-            StringUtils.isNotBlank( strMessage ) ? strMessage : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.NOTIFICATION_SENDER,
-            StringUtils.isNotBlank( strSender ) ? strSender : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.REMOTE_ID, StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.NOTIFICATION_OBJECT, StringUtils.isNotBlank( strObject ) ? strObject : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.NOTIFICATION_MESSAGE, StringUtils.isNotBlank( strMessage ) ? strMessage : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.NOTIFICATION_SENDER, StringUtils.isNotBlank( strSender ) ? strSender : StringUtils.EMPTY );
 
         _crmClientQueue.send( crmItem );
-    
-     
-        
+
     }
 
     @Override
-    public String sendCreateDemandByUserGuidV2( String strRemoteId,String strIdDemandType, String strUserGuid, String strIdStatusCRM,
-            String strStatusText, String strData, String strCRMWebAppCode ) throws CRMException
+    public String sendCreateDemandByUserGuidV2( String strRemoteId, String strIdDemandType, String strUserGuid, String strIdStatusCRM, String strStatusText,
+            String strData, String strCRMWebAppCode ) throws CRMException
     {
-        
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_USER_GUID_V2.toString(  ) );
+
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_CREATE_BY_USER_GUID_V2.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.REMOTE_ID,
-                StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
-            crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-                    StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
-        
+        crmItem.putParameter( ICRMItem.REMOTE_ID, StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.USER_GUID,
-            StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.USER_GUID, StringUtils.isNotBlank( strUserGuid ) ? strUserGuid : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.ID_STATUS_CRM,
-            StringUtils.isNotBlank( strIdStatusCRM ) ? strIdStatusCRM : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_STATUS_CRM, StringUtils.isNotBlank( strIdStatusCRM ) ? strIdStatusCRM : StringUtils.EMPTY );
 
-        crmItem.putParameter( ICRMItem.STATUS_TEXT,
-            StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.STATUS_TEXT, StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
         crmItem.putParameter( ICRMItem.DEMAND_DATA, StringUtils.isNotBlank( strData ) ? strData : StringUtils.EMPTY );
 
@@ -554,30 +486,27 @@ public class CRMClientService implements ICRMClientService
     }
 
     @Override
-    public void sendDeleteDemandV2(  String strRemoteId,String strIdDemandType, String strCRMWebAppCode) throws CRMException
+    public void sendDeleteDemandV2( String strRemoteId, String strIdDemandType, String strCRMWebAppCode ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DELETE_V2.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_DELETE_V2.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
             crmItem.setCRMWebAppCode( strCRMWebAppCode );
         }
 
-        crmItem.putParameter( ICRMItem.REMOTE_ID,
-                StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-                    StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
-    
+        crmItem.putParameter( ICRMItem.REMOTE_ID, StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
+
         _crmClientProcessor.doProcess( crmItem );
-     
-        
+
     }
 
     @Override
-    public void sendUpdateDemandV2( String strRemoteId,String strIdDemandType, String strStatusText, String strCRMWebAppCode, String strIdStatusCRM,
-            String strData  ) throws CRMException
+    public void sendUpdateDemandV2( String strRemoteId, String strIdDemandType, String strStatusText, String strCRMWebAppCode, String strIdStatusCRM,
+            String strData ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_UPDATE_V2.toString(  ) );
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_UPDATE_V2.toString( ) );
 
         if ( StringUtils.isNotBlank( strCRMWebAppCode ) )
         {
@@ -594,27 +523,23 @@ public class CRMClientService implements ICRMClientService
             crmItem.putParameter( ICRMItem.DEMAND_DATA, strData );
         }
 
-        crmItem.putParameter( ICRMItem.REMOTE_ID,
-                StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
-        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE,
-                    StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
-    
-        crmItem.putParameter( ICRMItem.STATUS_TEXT,
-            StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.REMOTE_ID, StringUtils.isNotBlank( strRemoteId ) ? strRemoteId : StringUtils.EMPTY );
+        crmItem.putParameter( ICRMItem.ID_DEMAND_TYPE, StringUtils.isNotBlank( strIdDemandType ) ? strIdDemandType : StringUtils.EMPTY );
+
+        crmItem.putParameter( ICRMItem.STATUS_TEXT, StringUtils.isNotBlank( strStatusText ) ? strStatusText : StringUtils.EMPTY );
 
         _crmClientProcessor.doProcess( crmItem );
-     
-        
+
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getCRMDemandTypes() throws CRMException 
+    public String getCRMDemandTypes( ) throws CRMException
     {
-        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_TYPES.toString(  ) );
-        
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_TYPES.toString( ) );
+
         return _crmClientProcessor.doProcess( crmItem );
     }
 }

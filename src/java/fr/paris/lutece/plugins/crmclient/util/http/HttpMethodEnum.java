@@ -33,13 +33,12 @@
  */
 package fr.paris.lutece.plugins.crmclient.util.http;
 
-
 /**
  *
  * HttpMethodEnum
  *
  */
 public enum HttpMethodEnum
-{GET,
-    POST;
+{
+    GET, POST;
 }

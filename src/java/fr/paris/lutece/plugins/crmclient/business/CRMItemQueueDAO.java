@@ -44,7 +44,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
 /**
  *
  * This class provides Data Access methods for CRMItemQueue objects
@@ -64,21 +63,22 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
 
     /**
      * Generates a new primary key
+     * 
      * @return The new primary key
      */
-    private int newPrimaryKey(  )
+    private int newPrimaryKey( )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, CRMClientPlugin.getPlugin(  ) );
-        daoUtil.executeQuery(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_NEW_PK, CRMClientPlugin.getPlugin( ) );
+        daoUtil.executeQuery( );
 
         int nKey = 1;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nKey = daoUtil.getInt( 1 ) + 1;
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nKey;
     }
@@ -87,20 +87,20 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public int nextCRMItemQueueId(  )
+    public int nextCRMItemQueueId( )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_CRM_ITEM_QUEUE_ID, CRMClientPlugin.getPlugin(  ) );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_NEXT_CRM_ITEM_QUEUE_ID, CRMClientPlugin.getPlugin( ) );
 
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
         int nIdCRMItemQueue = -1;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nIdCRMItemQueue = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nIdCRMItemQueue;
     }
@@ -111,10 +111,10 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     @Override
     public void lockCRMItemQueue( int nIdCRMItemQueue )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOCK_CRM_ITEM, CRMClientPlugin.getPlugin(  ) );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOCK_CRM_ITEM, CRMClientPlugin.getPlugin( ) );
         daoUtil.setInt( 1, nIdCRMItemQueue );
-        daoUtil.executeUpdate(  );
-        daoUtil.free(  );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
     }
 
     /**
@@ -127,28 +127,28 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
 
         try
         {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(  );
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream( );
             ObjectOutputStream objectOutputStream;
             objectOutputStream = new ObjectOutputStream( byteArrayOutputStream );
-            objectOutputStream.writeObject( crmItemQueue.getCRMItem(  ) );
-            objectOutputStream.close(  );
-            byteArrayOutputStream.close(  );
+            objectOutputStream.writeObject( crmItemQueue.getCRMItem( ) );
+            objectOutputStream.close( );
+            byteArrayOutputStream.close( );
 
-            transaction = new Transaction( CRMClientPlugin.getPlugin(  ) );
+            transaction = new Transaction( CRMClientPlugin.getPlugin( ) );
 
-            int nNewPrimaryKey = newPrimaryKey(  );
+            int nNewPrimaryKey = newPrimaryKey( );
             crmItemQueue.setIdCRMItemQueue( nNewPrimaryKey );
             transaction.prepareStatement( SQL_QUERY_INSERT );
-            transaction.getStatement(  ).setInt( 1, nNewPrimaryKey );
-            transaction.executeStatement(  );
+            transaction.getStatement( ).setInt( 1, nNewPrimaryKey );
+            transaction.executeStatement( );
             transaction.prepareStatement( SQL_QUERY_INSERT_CRM_ITEM );
-            transaction.getStatement(  ).setInt( 1, nNewPrimaryKey );
-            transaction.getStatement(  ).setBytes( 2, byteArrayOutputStream.toByteArray(  ) );
-            transaction.executeStatement(  );
+            transaction.getStatement( ).setInt( 1, nNewPrimaryKey );
+            transaction.getStatement( ).setBytes( 2, byteArrayOutputStream.toByteArray( ) );
+            transaction.executeStatement( );
 
-            transaction.commit(  );
+            transaction.commit( );
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             if ( transaction != null )
             {
@@ -168,28 +168,28 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
         CRMItemQueue crmItemQueue = null;
         ICRMItem crmItem = null;
         InputStream inputStream;
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOAD_CRM_ITEM, CRMClientPlugin.getPlugin(  ) );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_LOAD_CRM_ITEM, CRMClientPlugin.getPlugin( ) );
         daoUtil.setInt( 1, nIdCRMItemQueue );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
-            crmItemQueue = new CRMItemQueue(  );
+            crmItemQueue = new CRMItemQueue( );
             crmItemQueue.setIdCRMItemQueue( daoUtil.getInt( 1 ) );
             inputStream = daoUtil.getBinaryStream( 2 );
 
             try
             {
                 ObjectInputStream objectInputStream = new ObjectInputStream( inputStream );
-                crmItem = (ICRMItem) objectInputStream.readObject(  );
-                objectInputStream.close(  );
-                inputStream.close(  );
+                crmItem = (ICRMItem) objectInputStream.readObject( );
+                objectInputStream.close( );
+                inputStream.close( );
             }
-            catch ( IOException e )
+            catch( IOException e )
             {
                 AppLogService.error( e );
             }
-            catch ( ClassNotFoundException e )
+            catch( ClassNotFoundException e )
             {
                 AppLogService.error( e );
             }
@@ -197,7 +197,7 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
             crmItemQueue.setCRMItem( crmItem );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return crmItemQueue;
     }
@@ -208,20 +208,20 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
     @Override
     public void delete( int nIdCRMItemQueue )
     {
-        Transaction transaction = new Transaction( CRMClientPlugin.getPlugin(  ) );
+        Transaction transaction = new Transaction( CRMClientPlugin.getPlugin( ) );
 
         try
         {
             transaction.prepareStatement( SQL_QUERY_DELETE_CRM_ITEM );
-            transaction.getStatement(  ).setInt( 1, nIdCRMItemQueue );
-            transaction.executeStatement(  );
+            transaction.getStatement( ).setInt( 1, nIdCRMItemQueue );
+            transaction.executeStatement( );
             transaction.prepareStatement( SQL_QUERY_DELETE );
-            transaction.getStatement(  ).setInt( 1, nIdCRMItemQueue );
-            transaction.executeStatement(  );
-            transaction.commit(  );
+            transaction.getStatement( ).setInt( 1, nIdCRMItemQueue );
+            transaction.executeStatement( );
+            transaction.commit( );
         }
 
-        catch ( Exception e )
+        catch( Exception e )
         {
             transaction.rollback( e );
             AppLogService.error( e );
@@ -232,19 +232,19 @@ public class CRMItemQueueDAO implements ICRMItemQueueDAO
      * {@inheritDoc}
      */
     @Override
-    public int getCountCRMItem(  )
+    public int getCountCRMItem( )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT, CRMClientPlugin.getPlugin(  ) );
-        daoUtil.executeQuery(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_COUNT, CRMClientPlugin.getPlugin( ) );
+        daoUtil.executeQuery( );
 
         int nCount = 0;
 
-        if ( daoUtil.next(  ) )
+        if ( daoUtil.next( ) )
         {
             nCount = daoUtil.getInt( 1 );
         }
 
-        daoUtil.free(  );
+        daoUtil.free( );
 
         return nCount;
     }
