@@ -606,4 +606,15 @@ public class CRMClientService implements ICRMClientService
      
         
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getCRMDemandTypes() throws CRMException 
+    {
+        ICRMItem crmItem = _crmItemFactory.newCRMItem( CRMItemTypeEnum.DEMAND_TYPES.toString(  ) );
+        
+        return _crmClientProcessor.doProcess( crmItem );
+    }
 }

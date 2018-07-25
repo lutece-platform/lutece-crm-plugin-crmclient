@@ -37,6 +37,7 @@
 	<bean id="crmclient.crmItemDemandDemandJsonV2" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemDemandJsonV2" scope="prototype" />
     <bean id="crmclient.crmItemDemandDemandXml" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemDemandXml" scope="prototype" />
 	<bean id="crmclient.crmItemDemandDemandXmlV2" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemDemandXmlV2" scope="prototype" />
+	<bean id="crmclient.crmItemDemandTypes" class="fr.paris.lutece.plugins.crmclient.business.demand.DemandItemDemandTypes" scope="prototype" />
     
 	
 	<bean id="crmclient.crmItemUserGuidByIdCRMUser" class="fr.paris.lutece.plugins.crmclient.business.user.UserItemGuidByIdCRMUser" scope="prototype" />
